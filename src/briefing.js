@@ -20,7 +20,7 @@ async function ask(prompt) {
     },
     body: JSON.stringify({
       model: "claude-sonnet-4-6",
-      max_tokens: 100,
+      max_tokens: 80,
       messages: [{ role: "user", content: prompt }],
     }),
   });
@@ -36,23 +36,24 @@ async function main() {
   console.log(`🌅 Starting daily briefing — ${today}`);
   console.log("⏳ Generating briefing sections...");
 
-  const [markets, ai, cars, fashion, lesson] = await Promise.all([
-    ask(`NASDAQ markets briefing for ${today}. 2 sentences max. Cover market mood and one key factor. Plain text only.`),
-    ask(`One AI or tech insight for ${today}. 2 sentences max. Specific and surprising. Plain text only.`),
-    ask(`One luxury car insight for ${today}. 1 sentences max. Name a specific brand or model. Plain text only.`),
-    ask(`You are a luxury automotive expert. Share one fascinating insight for ${today} about one of these brands specifically: Lamborghini, Ferrari, Porsche, or Mercedes-AMG. Rotate between them daily. Cover new models, engineering breakthroughs, pricing news, or collector value. 2 sentences max. Plain text only.`),
-    ask(`One luxury fashion insight for ${today}. 2 sentences max. Name a specific house or designer. Plain text only.`),
-    ask(`One financial lesson for ${today}. Format: Q: question (max 10 words). A: answer (max 15 words). Plain text only.`),
+  const [markets, ai, cars, sportscars, fashion, lesson] = await Promise.all([
+    ask(`NASDAQ markets briefing for ${today}. 1 sentence. Cover market mood and one key factor. Plain text only.`),
+    ask(`One AI or tech insight for ${today}. 1 sentence. Specific and surprising. Plain text only.`),
+    ask(`One luxury car insight for ${today}. 1 sentence. Name a specific brand or model. Plain text only.`),
+    ask(`Luxury automotive expert. One insight for ${today} about Lamborghini, Ferrari, Porsche, or Mercedes-AMG specifically. New models, engineering, pricing, or collector value. 1 sentence. Plain text only.`),
+    ask(`One luxury fashion insight for ${today}. 1 sentence. Name a specific house or designer. Plain text only.`),
+    ask(`One financial lesson for ${today}. Format: Q: question (max 8 words). A: answer (max 12 words). Plain text only.`),
   ]);
 
-const message = `☀️ *Your 6 AM Briefing*
-
+  const message = `☀️ *Your 6 AM Briefing*
 📈 *MARKETS*
 ${markets}
 🤖 *AI & TECH*
 ${ai}
 🚗 *LUXURY CARS*
 ${cars}
+🏎️ *LAMBORGHINI • FERRARI • PORSCHE • AMG*
+${sportscars}
 👜 *FASHION*
 ${fashion}
 🧠 *LESSON*
