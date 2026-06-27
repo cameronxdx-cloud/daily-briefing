@@ -1,0 +1,17 @@
+{
+  "name": "daily-whatsapp-briefing",
+  "version": "1.0.0",
+  "description": "Daily 6 AM WhatsApp briefing",
+  "type": "module",
+  "main": "src/briefing.js",
+  "scripts": {
+    "start": "node src/briefing.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.27.0",
+    "twilio": "^5.3.0"
+  },
+  "engines": {
+    "node": ">=24.0.0"
+  }
+}
