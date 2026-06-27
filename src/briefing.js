@@ -20,7 +20,7 @@ async function ask(prompt) {
     },
     body: JSON.stringify({
       model: "claude-sonnet-4-6",
-      max_tokens: 300,
+      max_tokens: 100,
       messages: [{ role: "user", content: prompt }],
     }),
   });
