@@ -20,7 +20,7 @@ async function ask(prompt) {
     },
     body: JSON.stringify({
       model: "claude-sonnet-4-6",
-      max_tokens: 80,
+      max_tokens: 60,
       messages: [{ role: "user", content: prompt }],
     }),
   });
@@ -37,13 +37,13 @@ async function main() {
   console.log("⏳ Generating briefing sections...");
 
   const [markets, ai, cars, sportscars, fashion, vegas, lesson] = await Promise.all([
-    ask(`NASDAQ markets briefing for ${today}. 1 sentence. Cover market mood and one key factor. Plain text only.`),
-    ask(`One AI or tech insight for ${today}. 1 sentence. Specific and surprising. Plain text only.`),
-    ask(`One luxury car insight for ${today}. 1 sentence. Name a specific brand or model. Plain text only.`),
-    ask(`Luxury automotive expert. One insight for ${today} about Lamborghini, Ferrari, Porsche, or Mercedes-AMG specifically. 1 sentence. Plain text only.`),
-    ask(`One luxury fashion insight for ${today}. 1 sentence. Name a specific house or designer. Plain text only.`),
-    ask(`Las Vegas expert. One surprising fact about Las Vegas, Nevada for ${today}. Rotate topics: history, casinos, real estate, food, entertainment, sports, culture, or mob history. 1 sentence. Plain text only.`),
-    ask(`One financial lesson for ${today}. Format: Q: question (max 8 words). A: answer (max 12 words). Plain text only.`),
+    ask(`NASDAQ mood for ${today} in exactly 1 short sentence. Plain text only.`),
+    ask(`One AI or tech fact for ${today} in exactly 1 short sentence. Plain text only.`),
+    ask(`One luxury car fact for ${today} in exactly 1 short sentence, name a brand. Plain text only.`),
+    ask(`One fact about Lamborghini, Ferrari, Porsche, or Mercedes-AMG for ${today} in exactly 1 short sentence. Plain text only.`),
+    ask(`One luxury fashion fact for ${today} in exactly 1 short sentence, name a house. Plain text only.`),
+    ask(`One surprising Las Vegas fact for ${today} in exactly 1 short sentence. Plain text only.`),
+    ask(`Financial lesson for ${today}. Format: Q: [max 7 words] A: [max 10 words]. Plain text only.`),
   ]);
 
   const message = `☀️ *Your 6 AM Briefing*
@@ -53,7 +53,7 @@ ${markets}
 ${ai}
 🚗 *LUXURY CARS*
 ${cars}
-🏎️ *LAMBORGHINI • FERRARI • PORSCHE • AMG*
+🏎️ *LAMBO • FERRARI • PORSCHE • AMG*
 ${sportscars}
 👜 *FASHION*
 ${fashion}
