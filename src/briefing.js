@@ -44,23 +44,18 @@ async function main() {
     ask(`One financial lesson for ${today}. Format: Q: question (max 10 words). A: answer (max 15 words). Plain text only.`),
   ]);
 
-  const message = `☀️ *Your 6 AM Briefing — ${today}*
+const message = `☀️ *Your 6 AM Briefing*
 
 📈 *MARKETS*
 ${markets}
-
 🤖 *AI & TECH*
 ${ai}
-
 🚗 *LUXURY CARS*
 ${cars}
-
 👜 *FASHION*
 ${fashion}
-
 🧠 *LESSON*
 ${lesson}
-
 _Have a great day. 🤝_`;
 
   console.log("\n── Preview ──────────────────────────────");
