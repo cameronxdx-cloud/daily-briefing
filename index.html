@@ -17,6 +17,7 @@
     --purple: #a78bfa; --purple-dim: rgba(167,139,250,0.10);
     --green: #34d399; --green-dim: rgba(52,211,153,0.10);
     --red: #f87171; --orange: #fb923c; --orange-dim: rgba(251,146,60,0.10);
+    --teal: #2dd4bf; --teal-dim: rgba(45,212,191,0.10);
   }
   html { scroll-behavior: smooth; }
   body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; font-size: 15px; line-height: 1.6; min-height: 100vh; }
@@ -45,12 +46,14 @@
   .card.accent-cars { border-top: 2px solid var(--gold); }
   .card.accent-sportscars { border-top: 2px solid var(--orange); }
   .card.accent-fashion { border-top: 2px solid #f472b6; }
+  .card.accent-vegas { border-top: 2px solid var(--teal); }
   .card.accent-lesson { border-top: 2px solid var(--green); }
 
   .card-glow { position: absolute; top: -40px; right: -40px; width: 180px; height: 180px; border-radius: 50%; opacity: 0.04; pointer-events: none; }
   .glow-blue { background: var(--blue); } .glow-purple { background: var(--purple); }
   .glow-gold { background: var(--gold); } .glow-pink { background: #f472b6; }
   .glow-green { background: var(--green); } .glow-orange { background: var(--orange); }
+  .glow-teal { background: var(--teal); }
 
   .card-tag { display: inline-flex; align-items: center; gap: 6px; font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 10px; border-radius: 20px; margin-bottom: 1.25rem; }
   .tag-markets { background: var(--blue-dim); color: var(--blue); }
@@ -58,6 +61,7 @@
   .tag-cars { background: var(--gold-dim); color: var(--gold); }
   .tag-sportscars { background: var(--orange-dim); color: var(--orange); }
   .tag-fashion { background: rgba(244,114,182,0.1); color: #f472b6; }
+  .tag-vegas { background: var(--teal-dim); color: var(--teal); }
   .tag-lesson { background: var(--green-dim); color: var(--green); }
 
   .art-canvas { width: 100%; height: 180px; border-radius: 10px; margin-bottom: 1.25rem; display: block; }
@@ -75,6 +79,9 @@
 
   .brand-pills { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 1rem; }
   .brand-pill { font-size: 10px; font-weight: 600; letter-spacing: 0.06em; padding: 3px 8px; border-radius: 4px; background: var(--orange-dim); color: var(--orange); border: 1px solid rgba(251,146,60,0.2); }
+  .vegas-pill { font-size: 10px; font-weight: 600; letter-spacing: 0.06em; padding: 3px 8px; border-radius: 4px; background: var(--teal-dim); color: var(--teal); border: 1px solid rgba(45,212,191,0.2); }
+
+  .vegas-cats { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 1rem; }
 
   .lesson-q { font-family: 'Playfair Display', serif; font-size: 18px; color: var(--text); margin-bottom: 1rem; line-height: 1.4; }
   .lesson-q.loading { color: var(--muted); font-style: italic; font-family: 'Inter', sans-serif; font-size: 14px; }
@@ -117,7 +124,7 @@
 <section class="hero">
   <div class="hero-eyebrow"><span class="live-dot"></span>Live intelligence — updated daily</div>
   <h1 class="hero-headline" id="hero-headline">Good morning,<br>Cameron.</h1>
-  <p class="hero-sub">Your curated briefing on markets, technology, luxury, and one new thing to learn — every day at 6 AM.</p>
+  <p class="hero-sub">Your curated briefing on markets, technology, luxury, Las Vegas, and one new thing to learn — every day at 6 AM.</p>
 </section>
 
 <main class="main">
@@ -179,8 +186,24 @@
       <p class="card-body loading" id="body-fashion">Generating fashion insight...</p>
     </div>
 
+    <!-- Las Vegas -->
+    <div class="card accent-vegas">
+      <div class="card-glow glow-teal"></div>
+      <span class="card-tag tag-vegas">🎰 Las Vegas</span>
+      <canvas class="art-canvas" id="canvas-vegas" width="600" height="180"></canvas>
+      <div class="vegas-cats">
+        <span class="vegas-pill">HISTORY</span>
+        <span class="vegas-pill">BUSINESS</span>
+        <span class="vegas-pill">CULTURE</span>
+        <span class="vegas-pill">FOOD</span>
+        <span class="vegas-pill">REAL ESTATE</span>
+      </div>
+      <h2 class="card-title" id="vegas-title">Las Vegas daily fact</h2>
+      <p class="card-body loading" id="body-vegas">Generating Las Vegas insight...</p>
+    </div>
+
     <!-- Lesson -->
-    <div class="card accent-lesson">
+    <div class="card accent-lesson full-width">
       <div class="card-glow glow-green"></div>
       <span class="card-tag tag-lesson">🧠 Today's Lesson</span>
       <p class="lesson-q loading" id="lesson-q">Generating today's lesson...</p>
@@ -307,6 +330,33 @@ function drawFashion(id) {
   ctx.fillStyle='rgba(244,114,182,0.7)';ctx.font='500 11px Inter,sans-serif';ctx.fillText('LUXURY FASHION',16,22);
 }
 
+function drawVegas(id) {
+  const c=document.getElementById(id),ctx=c.getContext('2d'),w=c.width,h=c.height;
+  ctx.fillStyle='#080f0f';ctx.fillRect(0,0,w,h);
+  // City skyline silhouette
+  ctx.fillStyle='rgba(45,212,191,0.06)';
+  const buildings=[[0,0.4,80,0.6],[90,0.25,60,0.75],[160,0.35,50,0.65],[220,0.2,70,0.8],[300,0.3,90,0.7],[400,0.15,60,0.85],[470,0.28,80,0.72],[560,0.22,60,0.78],[630,0.35,70,0.65]];
+  buildings.forEach(([x,yRatio,bw,hRatio])=>{
+    ctx.fillRect(x, h*yRatio, bw, h*(1-yRatio));
+  });
+  // Neon glow lines
+  for(let i=0;i<30;i++){
+    const x=Math.random()*w, y=Math.random()*h*0.9;
+    const len=5+Math.random()*25;
+    const alpha=0.3+Math.random()*0.5;
+    const colors=['rgba(45,212,191,','rgba(251,146,60,','rgba(244,114,182,','rgba(201,168,76,'];
+    const col=colors[Math.floor(Math.random()*colors.length)];
+    ctx.strokeStyle=col+alpha+')';
+    ctx.lineWidth=1+Math.random()*2;
+    ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x,y-len);ctx.stroke();
+  }
+  // Glow overlay
+  const hg=ctx.createRadialGradient(w*0.5,h*0.8,0,w*0.5,h*0.8,w*0.6);
+  hg.addColorStop(0,'rgba(45,212,191,0.08)');hg.addColorStop(1,'rgba(45,212,191,0)');
+  ctx.fillStyle=hg;ctx.fillRect(0,0,w,h);
+  ctx.fillStyle='rgba(45,212,191,0.7)';ctx.font='500 11px Inter,sans-serif';ctx.fillText('LAS VEGAS, NEVADA',16,22);
+}
+
 async function ask(prompt) {
   const res=await fetch('https://api.anthropic.com/v1/messages',{
     method:'POST',
@@ -341,12 +391,13 @@ function revealLesson() {
 
 function drawAll() {
   drawMarkets('canvas-markets'); drawAI('canvas-ai');
-  drawCars('canvas-cars'); drawSportscars('canvas-sportscars'); drawFashion('canvas-fashion');
+  drawCars('canvas-cars'); drawSportscars('canvas-sportscars');
+  drawFashion('canvas-fashion'); drawVegas('canvas-vegas');
 }
 
 async function loadAll() {
   drawAll(); loadTickers();
-  ['markets','ai','cars','sportscars','fashion'].forEach(id=>{
+  ['markets','ai','cars','sportscars','fashion','vegas'].forEach(id=>{
     const el=document.getElementById(`body-${id}`);el.textContent='Generating...';el.classList.add('loading');
   });
   document.getElementById('lesson-q').textContent="Generating today's lesson...";
@@ -360,6 +411,7 @@ async function loadAll() {
     loadSection('cars',`Luxury automotive expert. One fascinating insight about luxury or performance cars for ${dateStr}. Name specific brands or models. 2-3 sentences. Plain text only.`),
     loadSection('sportscars',`Luxury automotive expert. One insight for ${dateStr} specifically about Lamborghini, Ferrari, Porsche, or Mercedes-AMG. Cover new models, engineering, pricing, or collector value. 2-3 sentences. Plain text only.`),
     loadSection('fashion',`Luxury fashion insider. One interesting insight about luxury fashion for ${dateStr}. Name specific houses or designers. 2-3 sentences. Plain text only.`),
+    loadSection('vegas',`You are a Las Vegas expert and local historian. Share one genuinely interesting and varied fact about Las Vegas, Nevada for ${dateStr}. Rotate through these categories daily: history & founding, casino & gambling business, real estate & development, food & restaurant scene, entertainment & residencies, local culture & hidden gems, sports teams & venues, famous residents, crime & mob history, or economic stats. Make it specific, surprising, and educational. 2-3 sentences. Plain text only.`),
     loadLesson(),
   ]);
   document.getElementById('gen-time').textContent=new Date().toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit',timeZone:TZ});
@@ -371,8 +423,9 @@ if(API_KEY==='YOUR_ANTHROPIC_API_KEY_HERE'){
     markets:"Markets are trading cautiously as investors digest mixed signals from the Federal Reserve. Tech stocks on the NASDAQ are holding steady while energy and healthcare sectors see modest rotation. The 10-year Treasury yield remains the key macro factor to watch.",
     ai:"Anthropic's Claude 4 series introduced extended reasoning that allows the model to silently think before responding — like a chess grandmaster considering future moves before touching a piece. Enterprise users report this has dramatically improved output quality on complex legal and financial tasks.",
     cars:"The Bentley Bentayga continues to dominate the ultra-luxury SUV segment, with resale values holding at 85% of MSRP after two years. The secret is Bentley's bespoke personalization program, which makes each car statistically unique.",
-    sportscars:"Ferrari's new SF90 XX Stradale has quietly become the most technically advanced road car the company has ever produced, with a hybrid system that delivers 1,016 horsepower while still being road-legal. Early collectors are already trading allocation slots for over €200,000 above list price.",
-    fashion:"Bottega Veneta's quiet luxury strategy under Daniel Lee is proving that the loudest brands aren't always the most profitable. Their intrecciato leather goods are outselling peak-logomania competitors by leaning into craftsmanship over visibility."
+    sportscars:"Ferrari's SF90 XX Stradale has become the most technically advanced road car the company has ever produced, with a hybrid system delivering 1,016 horsepower while remaining road-legal. Early collectors are already trading allocation slots for over €200,000 above list price.",
+    fashion:"Bottega Veneta's quiet luxury strategy under Daniel Lee is proving that the loudest brands aren't always the most profitable. Their intrecciato leather goods are outselling peak-logomania competitors by leaning into craftsmanship over visibility.",
+    vegas:"Las Vegas wasn't always a gambling capital — when Nevada legalized casino gambling in 1931, the Strip didn't exist yet, and the city's population was just 5,000 people. The real explosion came after WWII, when mobster Bugsy Siegel opened the Flamingo in 1946 and essentially invented the modern resort casino concept."
   };
   Object.entries(demos).forEach(([id,txt])=>{
     const el=document.getElementById(`body-${id}`);el.textContent=txt;el.classList.remove('loading');
