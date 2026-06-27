@@ -40,6 +40,7 @@ async function main() {
     ask(`NASDAQ markets briefing for ${today}. 2 sentences max. Cover market mood and one key factor. Plain text only.`),
     ask(`One AI or tech insight for ${today}. 2 sentences max. Specific and surprising. Plain text only.`),
     ask(`One luxury car insight for ${today}. 2 sentences max. Name a specific brand or model. Plain text only.`),
+    ask(`You are a luxury automotive expert. Share one fascinating insight for ${today} about one of these brands specifically: Lamborghini, Ferrari, Porsche, or Mercedes-AMG. Rotate between them daily. Cover new models, engineering breakthroughs, pricing news, or collector value. 2 sentences max. Plain text only.`),
     ask(`One luxury fashion insight for ${today}. 2 sentences max. Name a specific house or designer. Plain text only.`),
     ask(`One financial lesson for ${today}. Format: Q: question (max 10 words). A: answer (max 15 words). Plain text only.`),
   ]);
