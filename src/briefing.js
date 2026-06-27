@@ -36,12 +36,13 @@ async function main() {
   console.log(`🌅 Starting daily briefing — ${today}`);
   console.log("⏳ Generating briefing sections...");
 
-  const [markets, ai, cars, sportscars, fashion, lesson] = await Promise.all([
+  const [markets, ai, cars, sportscars, fashion, vegas, lesson] = await Promise.all([
     ask(`NASDAQ markets briefing for ${today}. 1 sentence. Cover market mood and one key factor. Plain text only.`),
     ask(`One AI or tech insight for ${today}. 1 sentence. Specific and surprising. Plain text only.`),
     ask(`One luxury car insight for ${today}. 1 sentence. Name a specific brand or model. Plain text only.`),
-    ask(`Luxury automotive expert. One insight for ${today} about Lamborghini, Ferrari, Porsche, or Mercedes-AMG specifically. New models, engineering, pricing, or collector value. 1 sentence. Plain text only.`),
+    ask(`Luxury automotive expert. One insight for ${today} about Lamborghini, Ferrari, Porsche, or Mercedes-AMG specifically. 1 sentence. Plain text only.`),
     ask(`One luxury fashion insight for ${today}. 1 sentence. Name a specific house or designer. Plain text only.`),
+    ask(`Las Vegas expert. One surprising fact about Las Vegas, Nevada for ${today}. Rotate topics: history, casinos, real estate, food, entertainment, sports, culture, or mob history. 1 sentence. Plain text only.`),
     ask(`One financial lesson for ${today}. Format: Q: question (max 8 words). A: answer (max 12 words). Plain text only.`),
   ]);
 
@@ -56,6 +57,8 @@ ${cars}
 ${sportscars}
 👜 *FASHION*
 ${fashion}
+🎰 *LAS VEGAS*
+${vegas}
 🧠 *LESSON*
 ${lesson}
 _Have a great day. 🤝_`;
