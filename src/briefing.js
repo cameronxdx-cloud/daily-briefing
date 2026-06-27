@@ -37,45 +37,35 @@ async function main() {
   console.log("⏳ Generating briefing sections...");
 
   const [markets, ai, cars, fashion, lesson] = await Promise.all([
-    ask(`Financial educator. 3-4 sentence NASDAQ & markets briefing for ${today}. Cover: market mood, one sector leading/lagging, one macro factor. Plain text only, no markdown.`),
-    ask(`Tech educator. ONE interesting AI or tech insight for ${today}. Specific, educational, surprising. Include a real-world analogy. 2-3 sentences. Plain text only.`),
-    ask(`Luxury automotive expert. ONE fascinating insight about luxury or high-performance cars for ${today}. Name specific brands/models. 2-3 sentences. Plain text only.`),
-    ask(`Luxury fashion insider. ONE interesting insight about luxury fashion for ${today}. Name specific houses/designers. 2-3 sentences. Plain text only.`),
-    ask(`One short financial or business lesson for ${today}. Format: Question on line 1, Answer on line 2. Under 20 words each. Plain text only.`),
+    ask(`NASDAQ markets briefing for ${today}. 2 sentences max. Cover market mood and one key factor. Plain text only.`),
+    ask(`One AI or tech insight for ${today}. 2 sentences max. Specific and surprising. Plain text only.`),
+    ask(`One luxury car insight for ${today}. 2 sentences max. Name a specific brand or model. Plain text only.`),
+    ask(`One luxury fashion insight for ${today}. 2 sentences max. Name a specific house or designer. Plain text only.`),
+    ask(`One financial lesson for ${today}. Format: Q: question (max 10 words). A: answer (max 15 words). Plain text only.`),
   ]);
 
-  const message = `☀️ *Good morning — your 6 AM briefing*
-📅 ${today}
+  const message = `☀️ *Your 6 AM Briefing — ${today}*
 
-━━━━━━━━━━━━━━━━━━━━
-📈 *NASDAQ & MARKETS*
-━━━━━━━━━━━━━━━━━━━━
+📈 *MARKETS*
 ${markets}
 
-━━━━━━━━━━━━━━━━━━━━
-🤖 *AI & TECHNOLOGY*
-━━━━━━━━━━━━━━━━━━━━
+🤖 *AI & TECH*
 ${ai}
 
-━━━━━━━━━━━━━━━━━━━━
 🚗 *LUXURY CARS*
-━━━━━━━━━━━━━━━━━━━━
 ${cars}
 
-━━━━━━━━━━━━━━━━━━━━
-👜 *LUXURY FASHION*
-━━━━━━━━━━━━━━━━━━━━
+👜 *FASHION*
 ${fashion}
 
-━━━━━━━━━━━━━━━━━━━━
-🧠 *TODAY'S LESSON*
-━━━━━━━━━━━━━━━━━━━━
+🧠 *LESSON*
 ${lesson}
 
 _Have a great day. 🤝_`;
 
   console.log("\n── Preview ──────────────────────────────");
   console.log(message);
+  console.log("Character count:", message.length);
   console.log("─────────────────────────────────────────\n");
 
   const sent = await twilioClient.messages.create({
