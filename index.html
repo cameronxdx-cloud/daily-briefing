@@ -332,6 +332,7 @@ async function loadAll() {
     loadSection('ai',`You are a technology educator. Share one genuinely fascinating AI or technology insight for ${dateStr}. Make it specific, educational, include a real-world analogy. 2-3 sentences. Plain text only.`),
     loadSection('cars',`You are a luxury automotive expert. Share one fascinating insight about luxury or performance cars for ${dateStr}. Name specific brands or models. 2-3 sentences. Plain text only.`),
     loadSection('fashion',`You are a luxury fashion insider. Share one interesting insight about luxury fashion for ${dateStr}. Name specific houses or designers. 2-3 sentences. Plain text only.`),
+    loadSection('cars',`You are a luxury automotive expert. Share one fascinating insight for ${dateStr} about one of these brands specifically: Lamborghini, Ferrari, Porsche, or Mercedes-AMG. Rotate between them daily. Cover new models, engineering breakthroughs, pricing news, or collector value. 2-3 sentences. Plain text only.`),
     loadLesson(),
   ]);
   document.getElementById('gen-time').textContent=new Date().toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit',timeZone:TZ});
