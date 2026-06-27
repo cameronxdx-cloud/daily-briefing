@@ -9,23 +9,14 @@
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
-    --bg: #0a0a0f;
-    --surface: #111118;
-    --surface2: #18181f;
-    --border: rgba(255,255,255,0.07);
-    --border-strong: rgba(255,255,255,0.14);
-    --text: #f0eff4;
-    --muted: #6b6a75;
-    --subtle: #9998a8;
-    --gold: #c9a84c;
-    --gold-dim: rgba(201,168,76,0.12);
-    --blue: #4a9eff;
-    --blue-dim: rgba(74,158,255,0.10);
-    --purple: #a78bfa;
-    --purple-dim: rgba(167,139,250,0.10);
-    --green: #34d399;
-    --green-dim: rgba(52,211,153,0.10);
-    --red: #f87171;
+    --bg: #0a0a0f; --surface: #111118; --surface2: #18181f;
+    --border: rgba(255,255,255,0.07); --border-strong: rgba(255,255,255,0.14);
+    --text: #f0eff4; --muted: #6b6a75; --subtle: #9998a8;
+    --gold: #c9a84c; --gold-dim: rgba(201,168,76,0.12);
+    --blue: #4a9eff; --blue-dim: rgba(74,158,255,0.10);
+    --purple: #a78bfa; --purple-dim: rgba(167,139,250,0.10);
+    --green: #34d399; --green-dim: rgba(52,211,153,0.10);
+    --red: #f87171; --orange: #fb923c; --orange-dim: rgba(251,146,60,0.10);
   }
   html { scroll-behavior: smooth; }
   body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; font-size: 15px; line-height: 1.6; min-height: 100vh; }
@@ -52,20 +43,20 @@
   .card.accent-markets { border-top: 2px solid var(--blue); }
   .card.accent-ai { border-top: 2px solid var(--purple); }
   .card.accent-cars { border-top: 2px solid var(--gold); }
+  .card.accent-sportscars { border-top: 2px solid var(--orange); }
   .card.accent-fashion { border-top: 2px solid #f472b6; }
   .card.accent-lesson { border-top: 2px solid var(--green); }
 
   .card-glow { position: absolute; top: -40px; right: -40px; width: 180px; height: 180px; border-radius: 50%; opacity: 0.04; pointer-events: none; }
-  .glow-blue { background: var(--blue); }
-  .glow-purple { background: var(--purple); }
-  .glow-gold { background: var(--gold); }
-  .glow-pink { background: #f472b6; }
-  .glow-green { background: var(--green); }
+  .glow-blue { background: var(--blue); } .glow-purple { background: var(--purple); }
+  .glow-gold { background: var(--gold); } .glow-pink { background: #f472b6; }
+  .glow-green { background: var(--green); } .glow-orange { background: var(--orange); }
 
   .card-tag { display: inline-flex; align-items: center; gap: 6px; font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 10px; border-radius: 20px; margin-bottom: 1.25rem; }
   .tag-markets { background: var(--blue-dim); color: var(--blue); }
   .tag-ai { background: var(--purple-dim); color: var(--purple); }
   .tag-cars { background: var(--gold-dim); color: var(--gold); }
+  .tag-sportscars { background: var(--orange-dim); color: var(--orange); }
   .tag-fashion { background: rgba(244,114,182,0.1); color: #f472b6; }
   .tag-lesson { background: var(--green-dim); color: var(--green); }
 
@@ -76,12 +67,14 @@
   .ticker-label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
   .ticker-val { font-family: 'JetBrains Mono', monospace; font-size: 16px; font-weight: 500; color: var(--text); margin: 2px 0; }
   .ticker-chg { font-family: 'JetBrains Mono', monospace; font-size: 11px; }
-  .up { color: var(--green); }
-  .down { color: var(--red); }
+  .up { color: var(--green); } .down { color: var(--red); }
 
   .card-title { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 600; line-height: 1.25; color: var(--text); margin-bottom: 0.75rem; letter-spacing: -0.3px; }
   .card-body { font-size: 14px; color: var(--subtle); line-height: 1.7; }
   .card-body.loading { color: var(--muted); font-style: italic; }
+
+  .brand-pills { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 1rem; }
+  .brand-pill { font-size: 10px; font-weight: 600; letter-spacing: 0.06em; padding: 3px 8px; border-radius: 4px; background: var(--orange-dim); color: var(--orange); border: 1px solid rgba(251,146,60,0.2); }
 
   .lesson-q { font-family: 'Playfair Display', serif; font-size: 18px; color: var(--text); margin-bottom: 1rem; line-height: 1.4; }
   .lesson-q.loading { color: var(--muted); font-style: italic; font-family: 'Inter', sans-serif; font-size: 14px; }
@@ -130,7 +123,8 @@
 <main class="main">
   <div class="grid">
 
-    <div class="card accent-markets" id="card-markets">
+    <!-- Markets -->
+    <div class="card accent-markets">
       <div class="card-glow glow-blue"></div>
       <span class="card-tag tag-markets">📈 NASDAQ & Markets</span>
       <canvas class="art-canvas" id="canvas-markets" width="600" height="180"></canvas>
@@ -143,6 +137,7 @@
       <p class="card-body loading" id="body-markets">Generating market analysis...</p>
     </div>
 
+    <!-- AI -->
     <div class="card accent-ai">
       <div class="card-glow glow-purple"></div>
       <span class="card-tag tag-ai">🤖 AI & Technology</span>
@@ -151,6 +146,7 @@
       <p class="card-body loading" id="body-ai">Generating AI insight...</p>
     </div>
 
+    <!-- Luxury Cars -->
     <div class="card accent-cars">
       <div class="card-glow glow-gold"></div>
       <span class="card-tag tag-cars">🚗 Luxury Automotive</span>
@@ -159,6 +155,22 @@
       <p class="card-body loading" id="body-cars">Generating car insight...</p>
     </div>
 
+    <!-- Sports Cars -->
+    <div class="card accent-sportscars">
+      <div class="card-glow glow-orange"></div>
+      <span class="card-tag tag-sportscars">🏎️ Dream Garage</span>
+      <canvas class="art-canvas" id="canvas-sportscars" width="600" height="180"></canvas>
+      <div class="brand-pills">
+        <span class="brand-pill">LAMBORGHINI</span>
+        <span class="brand-pill">FERRARI</span>
+        <span class="brand-pill">PORSCHE</span>
+        <span class="brand-pill">MERCEDES-AMG</span>
+      </div>
+      <h2 class="card-title">Sports car spotlight</h2>
+      <p class="card-body loading" id="body-sportscars">Generating spotlight...</p>
+    </div>
+
+    <!-- Fashion -->
     <div class="card accent-fashion">
       <div class="card-glow glow-pink"></div>
       <span class="card-tag tag-fashion">👜 Luxury Fashion</span>
@@ -167,7 +179,8 @@
       <p class="card-body loading" id="body-fashion">Generating fashion insight...</p>
     </div>
 
-    <div class="card accent-lesson full-width">
+    <!-- Lesson -->
+    <div class="card accent-lesson">
       <div class="card-glow glow-green"></div>
       <span class="card-tag tag-lesson">🧠 Today's Lesson</span>
       <p class="lesson-q loading" id="lesson-q">Generating today's lesson...</p>
@@ -184,10 +197,8 @@
 </main>
 
 <script>
-// ── YOUR API KEY — replace this ──────────────────────────────
 const API_KEY = 'YOUR_ANTHROPIC_API_KEY_HERE';
 
-// ── Date & greeting ──────────────────────────────────────────
 const TZ = 'America/Los_Angeles';
 const now = new Date();
 const dateStr = now.toLocaleDateString('en-US', { weekday:'long', year:'numeric', month:'long', day:'numeric', timeZone: TZ });
@@ -206,7 +217,6 @@ function updateCountdown() {
 }
 updateCountdown(); setInterval(updateCountdown, 60000);
 
-// ── Tickers ──────────────────────────────────────────────────
 function loadTickers() {
   setTimeout(() => {
     document.getElementById('t-ndx').textContent = '19,847';
@@ -218,31 +228,29 @@ function loadTickers() {
   }, 500);
 }
 
-// ── Generative canvas art ────────────────────────────────────
 function drawMarkets(id) {
-  const c = document.getElementById(id), ctx = c.getContext('2d'), w = c.width, h = c.height;
-  ctx.fillStyle = '#0d1117'; ctx.fillRect(0,0,w,h);
-  ctx.strokeStyle = 'rgba(74,158,255,0.07)'; ctx.lineWidth = 1;
-  for (let x=0;x<w;x+=40){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,h);ctx.stroke();}
-  for (let y=0;y<h;y+=30){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(w,y);ctx.stroke();}
-  const pts=[]; let v=h*0.6;
-  for (let x=0;x<=w;x+=8){v+=(Math.random()-0.44)*14;v=Math.max(h*0.15,Math.min(h*0.85,v));pts.push([x,v]);}
-  ctx.beginPath(); ctx.moveTo(pts[0][0],h);
-  pts.forEach(([x,y])=>ctx.lineTo(x,y)); ctx.lineTo(pts[pts.length-1][0],h);
-  const g=ctx.createLinearGradient(0,0,0,h); g.addColorStop(0,'rgba(74,158,255,0.3)'); g.addColorStop(1,'rgba(74,158,255,0)');
-  ctx.fillStyle=g; ctx.fill();
-  ctx.beginPath(); pts.forEach(([x,y],i)=>i?ctx.lineTo(x,y):ctx.moveTo(x,y));
-  ctx.strokeStyle='#4a9eff'; ctx.lineWidth=2; ctx.stroke();
-  ctx.fillStyle='rgba(74,158,255,0.6)'; ctx.font='500 11px Inter,sans-serif'; ctx.fillText('NASDAQ COMPOSITE',16,22);
+  const c=document.getElementById(id),ctx=c.getContext('2d'),w=c.width,h=c.height;
+  ctx.fillStyle='#0d1117';ctx.fillRect(0,0,w,h);
+  ctx.strokeStyle='rgba(74,158,255,0.07)';ctx.lineWidth=1;
+  for(let x=0;x<w;x+=40){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,h);ctx.stroke();}
+  for(let y=0;y<h;y+=30){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(w,y);ctx.stroke();}
+  const pts=[];let v=h*0.6;
+  for(let x=0;x<=w;x+=8){v+=(Math.random()-0.44)*14;v=Math.max(h*0.15,Math.min(h*0.85,v));pts.push([x,v]);}
+  ctx.beginPath();ctx.moveTo(pts[0][0],h);pts.forEach(([x,y])=>ctx.lineTo(x,y));ctx.lineTo(pts[pts.length-1][0],h);
+  const g=ctx.createLinearGradient(0,0,0,h);g.addColorStop(0,'rgba(74,158,255,0.3)');g.addColorStop(1,'rgba(74,158,255,0)');
+  ctx.fillStyle=g;ctx.fill();
+  ctx.beginPath();pts.forEach(([x,y],i)=>i?ctx.lineTo(x,y):ctx.moveTo(x,y));
+  ctx.strokeStyle='#4a9eff';ctx.lineWidth=2;ctx.stroke();
+  ctx.fillStyle='rgba(74,158,255,0.6)';ctx.font='500 11px Inter,sans-serif';ctx.fillText('NASDAQ COMPOSITE',16,22);
 }
 
 function drawAI(id) {
-  const c = document.getElementById(id), ctx = c.getContext('2d'), w = c.width, h = c.height;
-  ctx.fillStyle='#0e0d18'; ctx.fillRect(0,0,w,h);
+  const c=document.getElementById(id),ctx=c.getContext('2d'),w=c.width,h=c.height;
+  ctx.fillStyle='#0e0d18';ctx.fillRect(0,0,w,h);
   const layers=[[w*0.15,[0.25,0.5,0.75]],[w*0.38,[0.18,0.36,0.54,0.72]],[w*0.62,[0.18,0.36,0.54,0.72]],[w*0.85,[0.25,0.5,0.75]]];
   const nodes=layers.map(([x,ys])=>ys.map(y=>[x,y*h]));
   for(let l=0;l<nodes.length-1;l++) for(const[x1,y1]of nodes[l]) for(const[x2,y2]of nodes[l+1]){
-    ctx.strokeStyle=`rgba(167,139,250,${0.05+Math.random()*0.2})`; ctx.lineWidth=0.8;
+    ctx.strokeStyle=`rgba(167,139,250,${0.05+Math.random()*0.2})`;ctx.lineWidth=0.8;
     ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();
   }
   nodes.forEach(layer=>layer.forEach(([x,y])=>{
@@ -254,7 +262,7 @@ function drawAI(id) {
 }
 
 function drawCars(id) {
-  const c = document.getElementById(id), ctx = c.getContext('2d'), w = c.width, h = c.height;
+  const c=document.getElementById(id),ctx=c.getContext('2d'),w=c.width,h=c.height;
   ctx.fillStyle='#0f0d08';ctx.fillRect(0,0,w,h);
   const rg=ctx.createLinearGradient(0,h*0.5,0,h);rg.addColorStop(0,'#1a1510');rg.addColorStop(1,'#0f0d08');
   ctx.fillStyle=rg;ctx.fillRect(0,h*0.55,w,h*0.45);
@@ -269,8 +277,27 @@ function drawCars(id) {
   ctx.fillStyle='rgba(201,168,76,0.7)';ctx.font='500 11px Inter,sans-serif';ctx.fillText('LUXURY AUTOMOTIVE',16,22);
 }
 
+function drawSportscars(id) {
+  const c=document.getElementById(id),ctx=c.getContext('2d'),w=c.width,h=c.height;
+  ctx.fillStyle='#100808';ctx.fillRect(0,0,w,h);
+  for(let i=0;i<25;i++){
+    const x=Math.random()*w,y=h*0.05+Math.random()*h*0.6,len=40+Math.random()*120;
+    ctx.strokeStyle=`rgba(251,146,60,${0.05+Math.random()*0.18})`;ctx.lineWidth=0.5+Math.random();
+    ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x-len,y+len*0.05);ctx.stroke();
+  }
+  const hg=ctx.createRadialGradient(w*0.5,h*0.5,0,w*0.5,h*0.5,w*0.5);
+  hg.addColorStop(0,'rgba(251,146,60,0.12)');hg.addColorStop(1,'rgba(251,146,60,0)');
+  ctx.fillStyle=hg;ctx.fillRect(0,0,w,h);
+  const brands=['LAMBORGHINI','FERRARI','PORSCHE','AMG'];
+  brands.forEach((b,i)=>{
+    ctx.fillStyle=`rgba(251,146,60,${0.15+i*0.05})`;
+    ctx.font=`600 ${9+i}px Inter,sans-serif`;
+    ctx.fillText(b, 16+i*8, 22+i*18);
+  });
+}
+
 function drawFashion(id) {
-  const c = document.getElementById(id), ctx = c.getContext('2d'), w = c.width, h = c.height;
+  const c=document.getElementById(id),ctx=c.getContext('2d'),w=c.width,h=c.height;
   ctx.fillStyle='#110a12';ctx.fillRect(0,0,w,h);
   for(let i=0;i<28;i++){const x=(i/28)*w;ctx.strokeStyle=`rgba(244,114,182,${0.03+(i%3)*0.02})`;ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,h);ctx.stroke();}
   for(let i=0;i<18;i++){const y=(i/18)*h;ctx.strokeStyle=`rgba(244,114,182,${0.02+(i%2)*0.02})`;ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(w,y);ctx.stroke();}
@@ -280,9 +307,8 @@ function drawFashion(id) {
   ctx.fillStyle='rgba(244,114,182,0.7)';ctx.font='500 11px Inter,sans-serif';ctx.fillText('LUXURY FASHION',16,22);
 }
 
-// ── Claude API ───────────────────────────────────────────────
 async function ask(prompt) {
-  const res = await fetch('https://api.anthropic.com/v1/messages',{
+  const res=await fetch('https://api.anthropic.com/v1/messages',{
     method:'POST',
     headers:{'Content-Type':'application/json','x-api-key':API_KEY,'anthropic-version':'2023-06-01'},
     body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:200,messages:[{role:'user',content:prompt}]})
@@ -292,22 +318,20 @@ async function ask(prompt) {
 }
 
 async function loadSection(id, prompt) {
-  const el = document.getElementById(`body-${id}`);
-  try {
-    el.textContent = await ask(prompt);
-    el.classList.remove('loading');
-  } catch(e) { el.textContent='Unable to load — click Refresh to retry.'; el.classList.remove('loading'); }
+  const el=document.getElementById(`body-${id}`);
+  try { el.textContent=await ask(prompt); el.classList.remove('loading'); }
+  catch(e) { el.textContent='Unable to load — click Refresh to retry.'; el.classList.remove('loading'); }
 }
 
 async function loadLesson() {
-  const qEl=document.getElementById('lesson-q'), aEl=document.getElementById('lesson-a'), btn=document.getElementById('reveal-btn');
+  const qEl=document.getElementById('lesson-q'),aEl=document.getElementById('lesson-a'),btn=document.getElementById('reveal-btn');
   try {
-    const raw = await ask(`Give one educational financial or business lesson for ${dateStr}. Topics: market mechanics, investing, luxury brand economics, or tech business models. Format exactly:\nQ: [question under 12 words]\nA: [answer under 20 words]\nPlain text only.`);
+    const raw=await ask(`Give one educational financial or business lesson for ${dateStr}. Topics: market mechanics, investing, luxury brand economics, or tech business models. Format exactly:\nQ: [question under 12 words]\nA: [answer under 20 words]\nPlain text only.`);
     const lines=raw.split('\n').filter(l=>l.trim());
     qEl.textContent=(lines.find(l=>l.startsWith('Q:'))?.replace('Q:','').trim())||raw;
     aEl.textContent=(lines.find(l=>l.startsWith('A:'))?.replace('A:','').trim())||'';
-    qEl.classList.remove('loading'); btn.classList.remove('hidden');
-  } catch(e){ qEl.textContent='Unable to load lesson.'; qEl.classList.remove('loading'); }
+    qEl.classList.remove('loading');btn.classList.remove('hidden');
+  } catch(e){ qEl.textContent='Unable to load lesson.';qEl.classList.remove('loading'); }
 }
 
 function revealLesson() {
@@ -315,12 +339,15 @@ function revealLesson() {
   document.getElementById('reveal-btn').classList.add('hidden');
 }
 
-// ── Load all ─────────────────────────────────────────────────
+function drawAll() {
+  drawMarkets('canvas-markets'); drawAI('canvas-ai');
+  drawCars('canvas-cars'); drawSportscars('canvas-sportscars'); drawFashion('canvas-fashion');
+}
+
 async function loadAll() {
-  drawMarkets('canvas-markets'); drawAI('canvas-ai'); drawCars('canvas-cars'); drawFashion('canvas-fashion');
-  loadTickers();
-  ['markets','ai','cars','fashion'].forEach(id=>{
-    const el=document.getElementById(`body-${id}`); el.textContent='Generating...'; el.classList.add('loading');
+  drawAll(); loadTickers();
+  ['markets','ai','cars','sportscars','fashion'].forEach(id=>{
+    const el=document.getElementById(`body-${id}`);el.textContent='Generating...';el.classList.add('loading');
   });
   document.getElementById('lesson-q').textContent="Generating today's lesson...";
   document.getElementById('lesson-q').classList.add('loading');
@@ -328,28 +355,27 @@ async function loadAll() {
   document.getElementById('reveal-btn').classList.add('hidden');
 
   await Promise.all([
-    loadSection('markets',`You are a sharp financial educator. Write 3 sentences about NASDAQ and US market conditions for ${dateStr}. Cover overall mood, one sector leading or lagging, and one macro driver. Plain text only, no markdown.`),
-    loadSection('ai',`You are a technology educator. Share one genuinely fascinating AI or technology insight for ${dateStr}. Make it specific, educational, include a real-world analogy. 2-3 sentences. Plain text only.`),
-    loadSection('cars',`You are a luxury automotive expert. Share one fascinating insight about luxury or performance cars for ${dateStr}. Name specific brands or models. 2-3 sentences. Plain text only.`),
-    loadSection('fashion',`You are a luxury fashion insider. Share one interesting insight about luxury fashion for ${dateStr}. Name specific houses or designers. 2-3 sentences. Plain text only.`),
-    loadSection('cars',`You are a luxury automotive expert. Share one fascinating insight for ${dateStr} about one of these brands specifically: Lamborghini, Ferrari, Porsche, or Mercedes-AMG. Rotate between them daily. Cover new models, engineering breakthroughs, pricing news, or collector value. 2-3 sentences. Plain text only.`),
+    loadSection('markets',`Sharp financial educator. 3 sentences on NASDAQ and US markets for ${dateStr}. Cover mood, one sector leading/lagging, one macro driver. Plain text only.`),
+    loadSection('ai',`Technology educator. One genuinely fascinating AI or tech insight for ${dateStr}. Specific, educational, real-world analogy. 2-3 sentences. Plain text only.`),
+    loadSection('cars',`Luxury automotive expert. One fascinating insight about luxury or performance cars for ${dateStr}. Name specific brands or models. 2-3 sentences. Plain text only.`),
+    loadSection('sportscars',`Luxury automotive expert. One insight for ${dateStr} specifically about Lamborghini, Ferrari, Porsche, or Mercedes-AMG. Cover new models, engineering, pricing, or collector value. 2-3 sentences. Plain text only.`),
+    loadSection('fashion',`Luxury fashion insider. One interesting insight about luxury fashion for ${dateStr}. Name specific houses or designers. 2-3 sentences. Plain text only.`),
     loadLesson(),
   ]);
   document.getElementById('gen-time').textContent=new Date().toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit',timeZone:TZ});
 }
 
-// ── Init ─────────────────────────────────────────────────────
-drawMarkets('canvas-markets'); drawAI('canvas-ai'); drawCars('canvas-cars'); drawFashion('canvas-fashion');
-loadTickers();
+drawAll(); loadTickers();
 if(API_KEY==='YOUR_ANTHROPIC_API_KEY_HERE'){
   const demos={
-    markets:"Markets are trading cautiously today as investors digest mixed signals from the Federal Reserve. Tech stocks on the NASDAQ are holding steady while energy and healthcare sectors see modest rotation. The 10-year Treasury yield remains the key macro factor to watch this week.",
-    ai:"Anthropic's Claude 4 series introduced a new form of extended reasoning that allows the model to silently 'think' before responding — similar to how a chess grandmaster considers future moves before touching a piece. Enterprise users report this has dramatically improved output quality on complex legal and financial analysis tasks.",
-    cars:"The Bentley Bentayga continues to dominate the ultra-luxury SUV segment, with resale values holding at 85% of MSRP after two years — an almost unheard-of retention rate in any vehicle category. The secret is Bentley's bespoke personalization program, which makes each car statistically unique.",
-    fashion:"Bottega Veneta's 'quiet luxury' strategy under Daniel Lee is proving that the loudest brands aren't always the most profitable. Their intrecciato leather goods are outselling peak-logomania competitors by leaning into craftsmanship over visibility — a bet that Gen Z buyers are rewarding them for."
+    markets:"Markets are trading cautiously as investors digest mixed signals from the Federal Reserve. Tech stocks on the NASDAQ are holding steady while energy and healthcare sectors see modest rotation. The 10-year Treasury yield remains the key macro factor to watch.",
+    ai:"Anthropic's Claude 4 series introduced extended reasoning that allows the model to silently think before responding — like a chess grandmaster considering future moves before touching a piece. Enterprise users report this has dramatically improved output quality on complex legal and financial tasks.",
+    cars:"The Bentley Bentayga continues to dominate the ultra-luxury SUV segment, with resale values holding at 85% of MSRP after two years. The secret is Bentley's bespoke personalization program, which makes each car statistically unique.",
+    sportscars:"Ferrari's new SF90 XX Stradale has quietly become the most technically advanced road car the company has ever produced, with a hybrid system that delivers 1,016 horsepower while still being road-legal. Early collectors are already trading allocation slots for over €200,000 above list price.",
+    fashion:"Bottega Veneta's quiet luxury strategy under Daniel Lee is proving that the loudest brands aren't always the most profitable. Their intrecciato leather goods are outselling peak-logomania competitors by leaning into craftsmanship over visibility."
   };
   Object.entries(demos).forEach(([id,txt])=>{
-    const el=document.getElementById(`body-${id}`); el.textContent=txt; el.classList.remove('loading');
+    const el=document.getElementById(`body-${id}`);el.textContent=txt;el.classList.remove('loading');
   });
   document.getElementById('lesson-q').textContent="What makes a luxury brand genuinely defensible against copycats?";
   document.getElementById('lesson-q').classList.remove('loading');
