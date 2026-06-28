@@ -7,152 +7,129 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-:root {
-  --bg: #080810; --surface: #0f0f18; --surface2: #16161f; --surface3: #1c1c28;
-  --border: rgba(255,255,255,0.06); --border-med: rgba(255,255,255,0.1); --border-strong: rgba(255,255,255,0.16);
-  --text: #eeedf5; --muted: #5e5d6e; --subtle: #8f8ea0;
-  --gold: #c9a84c; --gold-dim: rgba(201,168,76,0.1); --gold-glow: rgba(201,168,76,0.06);
-  --blue: #4a9eff; --blue-dim: rgba(74,158,255,0.08);
-  --purple: #a78bfa; --purple-dim: rgba(167,139,250,0.08);
-  --green: #34d399; --green-dim: rgba(52,211,153,0.08);
-  --red: #f87171; --orange: #fb923c; --orange-dim: rgba(251,146,60,0.08);
-  --pink: #f472b6; --pink-dim: rgba(244,114,182,0.08);
-  --teal: #2dd4bf; --teal-dim: rgba(45,212,191,0.08);
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#080810;--surface:#0f0f18;--surface2:#16161f;--surface3:#1c1c28;
+  --border:rgba(255,255,255,0.06);--border-med:rgba(255,255,255,0.1);--border-strong:rgba(255,255,255,0.16);
+  --text:#eeedf5;--muted:#5e5d6e;--subtle:#8f8ea0;
+  --gold:#c9a84c;--gold-dim:rgba(201,168,76,0.1);
+  --blue:#4a9eff;--blue-dim:rgba(74,158,255,0.08);
+  --purple:#a78bfa;--purple-dim:rgba(167,139,250,0.08);
+  --green:#34d399;--green-dim:rgba(52,211,153,0.08);
+  --red:#f87171;--orange:#fb923c;--orange-dim:rgba(251,146,60,0.08);
+  --pink:#f472b6;--pink-dim:rgba(244,114,182,0.08);
+  --teal:#2dd4bf;--teal-dim:rgba(45,212,191,0.08);
 }
-html { scroll-behavior: smooth; }
-body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; font-size: 15px; line-height: 1.6; min-height: 100vh; }
-
-/* ── Header ── */
-header { border-bottom: 1px solid var(--border); padding: 0 2rem; position: sticky; top: 0; background: rgba(8,8,16,0.95); backdrop-filter: blur(20px); z-index: 100; display: flex; align-items: center; justify-content: space-between; height: 58px; }
-.logo { font-family: 'Playfair Display', serif; font-size: 19px; font-weight: 700; color: var(--text); letter-spacing: -0.3px; }
-.logo span { color: var(--gold); }
-.header-right { display: flex; align-items: center; gap: 1.25rem; }
-.date-pill { font-size: 11px; font-weight: 500; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; }
-.refresh-btn { background: none; border: 1px solid var(--border-med); color: var(--subtle); font-size: 12px; font-family: 'Inter', sans-serif; padding: 6px 14px; border-radius: 6px; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 6px; }
-.refresh-btn:hover { border-color: var(--gold); color: var(--gold); }
-
-/* ── Hero ── */
-.hero { padding: 2.5rem 2rem 2rem; max-width: 1200px; margin: 0 auto; border-bottom: 1px solid var(--border); }
-.hero-eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.75rem; display: flex; align-items: center; gap: 8px; }
-.live-dot { width: 6px; height: 6px; background: var(--green); border-radius: 50%; animation: pulse 2s infinite; }
-@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.8)} }
-.hero-headline { font-family: 'Playfair Display', serif; font-size: clamp(34px, 5vw, 58px); font-weight: 700; line-height: 1.06; letter-spacing: -1.5px; color: var(--text); max-width: 680px; margin-bottom: 0.9rem; }
-.hero-sub { font-size: 14px; color: var(--subtle); max-width: 420px; line-height: 1.65; }
-
-/* ── Grid ── */
-.main { max-width: 1200px; margin: 0 auto; padding: 1.75rem 2rem 2rem; }
-.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 18px; overflow: hidden; margin-bottom: 1.25rem; }
-
-/* ── Cards ── */
-.card { background: var(--surface); padding: 0; position: relative; overflow: hidden; cursor: pointer; transition: background 0.25s; }
-.card:hover { background: var(--surface2); }
-.card:hover .card-img-wrap img { transform: scale(1.04); }
-.card:hover .card-overlay { opacity: 1; }
-.card.full-width { grid-column: 1 / -1; cursor: default; }
-.card.full-width:hover { background: var(--surface); }
-
-.card-accent { height: 2px; width: 100%; }
-.acc-blue { background: linear-gradient(90deg, var(--blue), transparent); }
-.acc-purple { background: linear-gradient(90deg, var(--purple), transparent); }
-.acc-gold { background: linear-gradient(90deg, var(--gold), transparent); }
-.acc-orange { background: linear-gradient(90deg, var(--orange), transparent); }
-.acc-pink { background: linear-gradient(90deg, var(--pink), transparent); }
-.acc-teal { background: linear-gradient(90deg, var(--teal), transparent); }
-.acc-green { background: linear-gradient(90deg, var(--green), transparent); }
-
-/* ── Card image ── */
-.card-img-wrap { width: 100%; height: 200px; overflow: hidden; position: relative; }
-.card-img-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94); display: block; }
-.card-img-wrap .img-fallback { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
-.card-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(8,8,16,0.85) 0%, rgba(8,8,16,0.2) 60%, transparent 100%); opacity: 0.7; transition: opacity 0.3s; pointer-events: none; }
-.overlay-label { position: absolute; bottom: 12px; left: 16px; font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.5); }
-.click-hint { position: absolute; bottom: 12px; right: 14px; font-size: 10px; color: rgba(255,255,255,0.3); display: flex; align-items: center; gap: 4px; }
-.click-hint svg { width: 11px; height: 11px; }
-
-/* ── Card content ── */
-.card-inner { padding: 1.5rem 1.75rem 1.75rem; }
-.card-tag { display: inline-flex; align-items: center; gap: 6px; font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 3px 9px; border-radius: 20px; margin-bottom: 0.9rem; }
-.tag-blue { background: var(--blue-dim); color: var(--blue); }
-.tag-purple { background: var(--purple-dim); color: var(--purple); }
-.tag-gold { background: var(--gold-dim); color: var(--gold); }
-.tag-orange { background: var(--orange-dim); color: var(--orange); }
-.tag-pink { background: var(--pink-dim); color: var(--pink); }
-.tag-teal { background: var(--teal-dim); color: var(--teal); }
-.tag-green { background: var(--green-dim); color: var(--green); }
-
-.ticker-row { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 1rem; }
-.ticker-item { background: var(--surface3); border: 1px solid var(--border-med); border-radius: 7px; padding: 0.5rem 0.875rem; }
-.ticker-label { font-size: 9px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; }
-.ticker-val { font-family: 'JetBrains Mono', monospace; font-size: 15px; font-weight: 500; color: var(--text); margin: 2px 0; }
-.ticker-chg { font-family: 'JetBrains Mono', monospace; font-size: 10px; }
-.up { color: var(--green); } .down { color: var(--red); }
-
-.card-title { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 600; line-height: 1.25; color: var(--text); margin-bottom: 0.6rem; letter-spacing: -0.2px; }
-.card-body { font-size: 13.5px; color: var(--subtle); line-height: 1.7; }
-.card-body.loading { color: var(--muted); font-style: italic; }
-
-.brand-pills { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 0.875rem; }
-.bpill { font-size: 9px; font-weight: 700; letter-spacing: 0.08em; padding: 3px 7px; border-radius: 3px; background: var(--orange-dim); color: var(--orange); border: 1px solid rgba(251,146,60,0.15); }
-.vpill { font-size: 9px; font-weight: 700; letter-spacing: 0.08em; padding: 3px 7px; border-radius: 3px; background: var(--teal-dim); color: var(--teal); border: 1px solid rgba(45,212,191,0.15); }
-
-/* ── Lesson card ── */
-.lesson-inner { padding: 1.75rem 2rem; }
-.lesson-q { font-family: 'Playfair Display', serif; font-size: 19px; color: var(--text); margin-bottom: 1rem; line-height: 1.4; }
-.lesson-q.loading { color: var(--muted); font-style: italic; font-family: 'Inter', sans-serif; font-size: 14px; }
-.lesson-a { font-size: 14px; color: var(--subtle); line-height: 1.7; padding: 1rem 1.25rem; background: var(--green-dim); border-left: 2px solid var(--green); border-radius: 0 8px 8px 0; display: none; margin-top: 1rem; }
-.lesson-a.visible { display: block; }
-.reveal-btn { margin-top: 1rem; background: none; border: 1px solid var(--border-strong); color: var(--subtle); font-size: 12px; font-family: 'Inter', sans-serif; padding: 7px 16px; border-radius: 6px; cursor: pointer; transition: all 0.2s; }
-.reveal-btn:hover { border-color: var(--green); color: var(--green); }
-.reveal-btn.hidden { display: none; }
-
-/* ── Bottom strip ── */
-.bottom-strip { border: 1px solid var(--border); border-radius: 10px; padding: 1rem 1.5rem; display: flex; align-items: center; justify-content: space-between; background: var(--surface); margin-bottom: 3rem; flex-wrap: wrap; gap: 0.75rem; }
-.strip-left { font-size: 12px; color: var(--muted); }
-.strip-left strong { color: var(--subtle); font-weight: 500; }
-.mono-gold { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--gold); }
-
-/* ── MODAL ── */
-.modal-backdrop { position: fixed; inset: 0; background: rgba(4,4,10,0.88); backdrop-filter: blur(12px); z-index: 500; display: none; align-items: flex-start; justify-content: center; padding: 2rem 1rem; overflow-y: auto; }
-.modal-backdrop.open { display: flex; }
-.modal { background: var(--surface); border: 1px solid var(--border-med); border-radius: 20px; width: 100%; max-width: 760px; overflow: hidden; animation: modalIn 0.3s cubic-bezier(0.34,1.56,0.64,1); margin: auto; }
-@keyframes modalIn { from{opacity:0;transform:translateY(20px) scale(0.97)} to{opacity:1;transform:none} }
-
-.modal-hero { position: relative; height: 320px; overflow: hidden; }
-.modal-hero img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.modal-hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(15,15,24,1) 0%, rgba(15,15,24,0.4) 50%, rgba(15,15,24,0.1) 100%); }
-.modal-hero-content { position: absolute; bottom: 0; left: 0; right: 0; padding: 2rem; }
-.modal-tag { display: inline-flex; align-items: center; gap: 6px; font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 4px 10px; border-radius: 20px; margin-bottom: 0.75rem; }
-.modal-title { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; line-height: 1.15; color: var(--text); letter-spacing: -0.5px; }
-
-.modal-body { padding: 2rem; }
-.modal-summary { font-size: 15px; color: var(--subtle); line-height: 1.75; margin-bottom: 1.75rem; padding-bottom: 1.75rem; border-bottom: 1px solid var(--border); }
-.modal-summary.loading { color: var(--muted); font-style: italic; }
-
-.modal-gallery { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 1.75rem; }
-.gallery-img { border-radius: 10px; overflow: hidden; aspect-ratio: 4/3; }
-.gallery-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s ease; }
-.gallery-img:hover img { transform: scale(1.05); }
-.gallery-img.loading-img { background: var(--surface3); animation: shimmer 1.5s infinite; }
-@keyframes shimmer { 0%{opacity:0.5} 50%{opacity:1} 100%{opacity:0.5} }
-
-.modal-facts { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 1.75rem; }
-.fact-card { background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; padding: 1rem 1.1rem; }
-.fact-label { font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
-.fact-value { font-size: 13px; color: var(--text); line-height: 1.5; }
-.fact-value.loading { color: var(--muted); font-style: italic; font-size: 12px; }
-
-.modal-deep { font-size: 14px; color: var(--subtle); line-height: 1.8; }
-.modal-deep.loading { color: var(--muted); font-style: italic; }
-.modal-deep-label { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.75rem; }
-
-.modal-close { position: absolute; top: 1.25rem; right: 1.25rem; width: 36px; height: 36px; background: rgba(8,8,16,0.7); border: 1px solid var(--border-med); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--subtle); font-size: 18px; transition: all 0.2s; z-index: 10; }
-.modal-close:hover { background: rgba(8,8,16,0.95); color: var(--text); }
-
-/* ── Fallback canvas ── */
-.fallback-canvas { width: 100%; height: 200px; display: block; }
-
-/* ── Responsive ── */
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-size:15px;line-height:1.6;min-height:100vh;}
+header{border-bottom:1px solid var(--border);padding:0 2rem;position:sticky;top:0;background:rgba(8,8,16,0.96);backdrop-filter:blur(20px);z-index:200;display:flex;align-items:center;justify-content:space-between;height:58px;}
+.logo{font-family:'Playfair Display',serif;font-size:19px;font-weight:700;color:var(--text);letter-spacing:-0.3px;}
+.logo span{color:var(--gold);}
+.header-right{display:flex;align-items:center;gap:1.25rem;}
+.date-pill{font-size:11px;font-weight:500;color:var(--muted);letter-spacing:0.08em;text-transform:uppercase;}
+.refresh-btn{background:none;border:1px solid var(--border-med);color:var(--subtle);font-size:12px;font-family:'Inter',sans-serif;padding:6px 14px;border-radius:6px;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:6px;}
+.refresh-btn:hover{border-color:var(--gold);color:var(--gold);}
+.hero{padding:2.5rem 2rem 2rem;max-width:1200px;margin:0 auto;border-bottom:1px solid var(--border);}
+.hero-eyebrow{font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);margin-bottom:0.75rem;display:flex;align-items:center;gap:8px;}
+.live-dot{width:6px;height:6px;background:var(--green);border-radius:50%;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.4;transform:scale(0.8)}}
+.hero-headline{font-family:'Playfair Display',serif;font-size:clamp(34px,5vw,58px);font-weight:700;line-height:1.06;letter-spacing:-1.5px;color:var(--text);max-width:680px;margin-bottom:0.9rem;}
+.hero-sub{font-size:14px;color:var(--subtle);max-width:420px;line-height:1.65;}
+.main{max-width:1200px;margin:0 auto;padding:1.75rem 2rem 2rem;}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border);border-radius:18px;overflow:hidden;margin-bottom:1.25rem;}
+.card{background:var(--surface);padding:0;position:relative;overflow:hidden;cursor:pointer;transition:background 0.25s;}
+.card:hover{background:var(--surface2);}
+.card:hover .card-img-wrap img{transform:scale(1.04);}
+.card.full-width{grid-column:1/-1;cursor:default;}
+.card.full-width:hover{background:var(--surface);}
+.card-accent{height:2px;width:100%;}
+.acc-blue{background:linear-gradient(90deg,var(--blue),transparent);}
+.acc-purple{background:linear-gradient(90deg,var(--purple),transparent);}
+.acc-gold{background:linear-gradient(90deg,var(--gold),transparent);}
+.acc-orange{background:linear-gradient(90deg,var(--orange),transparent);}
+.acc-pink{background:linear-gradient(90deg,var(--pink),transparent);}
+.acc-teal{background:linear-gradient(90deg,var(--teal),transparent);}
+.acc-green{background:linear-gradient(90deg,var(--green),transparent);}
+.card-img-wrap{width:100%;height:210px;overflow:hidden;position:relative;}
+.card-img-wrap img{width:100%;height:100%;object-fit:cover;transition:transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94);display:block;}
+.card-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(8,8,16,0.88) 0%,rgba(8,8,16,0.25) 55%,transparent 100%);pointer-events:none;}
+.overlay-label{position:absolute;bottom:12px;left:16px;font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.45);}
+.click-hint{position:absolute;bottom:12px;right:14px;font-size:11px;color:rgba(255,255,255,0.35);}
+.card-inner{padding:1.5rem 1.75rem 1.75rem;}
+.card-tag{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;padding:3px 9px;border-radius:20px;margin-bottom:0.9rem;}
+.tag-blue{background:var(--blue-dim);color:var(--blue);}
+.tag-purple{background:var(--purple-dim);color:var(--purple);}
+.tag-gold{background:var(--gold-dim);color:var(--gold);}
+.tag-orange{background:var(--orange-dim);color:var(--orange);}
+.tag-pink{background:var(--pink-dim);color:var(--pink);}
+.tag-teal{background:var(--teal-dim);color:var(--teal);}
+.tag-green{background:var(--green-dim);color:var(--green);}
+.ticker-row{display:flex;gap:0.6rem;flex-wrap:wrap;margin-bottom:1rem;}
+.ticker-item{background:var(--surface3);border:1px solid var(--border-med);border-radius:7px;padding:0.5rem 0.875rem;}
+.ticker-label{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;}
+.ticker-val{font-family:'JetBrains Mono',monospace;font-size:15px;font-weight:500;color:var(--text);margin:2px 0;}
+.ticker-chg{font-family:'JetBrains Mono',monospace;font-size:10px;}
+.up{color:var(--green);}.down{color:var(--red);}
+.card-title{font-family:'Playfair Display',serif;font-size:18px;font-weight:600;line-height:1.25;color:var(--text);margin-bottom:0.6rem;letter-spacing:-0.2px;}
+.card-body{font-size:13.5px;color:var(--subtle);line-height:1.7;}
+.card-body.loading{color:var(--muted);font-style:italic;}
+.brand-pills{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:0.875rem;}
+.bpill{font-size:9px;font-weight:700;letter-spacing:0.08em;padding:3px 7px;border-radius:3px;background:var(--orange-dim);color:var(--orange);border:1px solid rgba(251,146,60,0.15);}
+.vpill{font-size:9px;font-weight:700;letter-spacing:0.08em;padding:3px 7px;border-radius:3px;background:var(--teal-dim);color:var(--teal);border:1px solid rgba(45,212,191,0.15);}
+.lesson-inner{padding:1.75rem 2rem;}
+.lesson-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;flex-wrap:wrap;gap:0.75rem;}
+.lesson-q{font-family:'Playfair Display',serif;font-size:19px;color:var(--text);line-height:1.4;}
+.lesson-q.loading{color:var(--muted);font-style:italic;font-family:'Inter',sans-serif;font-size:14px;}
+.lesson-a{font-size:14px;color:var(--subtle);line-height:1.7;padding:1rem 1.25rem;background:var(--green-dim);border-left:2px solid var(--green);border-radius:0 8px 8px 0;display:none;margin-top:0.75rem;}
+.lesson-a.visible{display:block;}
+.lesson-btns{display:flex;gap:8px;margin-top:1rem;flex-wrap:wrap;}
+.reveal-btn,.new-lesson-btn{background:none;border:1px solid var(--border-strong);color:var(--subtle);font-size:12px;font-family:'Inter',sans-serif;padding:7px 16px;border-radius:6px;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:6px;}
+.reveal-btn:hover{border-color:var(--green);color:var(--green);}
+.new-lesson-btn:hover{border-color:var(--gold);color:var(--gold);}
+.reveal-btn.hidden{display:none;}
+.spinning svg{animation:spin 0.7s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg)}}
+.bottom-strip{border:1px solid var(--border);border-radius:10px;padding:1rem 1.5rem;display:flex;align-items:center;justify-content:space-between;background:var(--surface);margin-bottom:3rem;flex-wrap:wrap;gap:0.75rem;}
+.strip-left{font-size:12px;color:var(--muted);}
+.strip-left strong{color:var(--subtle);font-weight:500;}
+.mono-gold{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--gold);}
+/* Modal */
+.modal-backdrop{position:fixed;inset:0;background:rgba(4,4,10,0.9);backdrop-filter:blur(14px);z-index:500;display:none;align-items:flex-start;justify-content:center;padding:2rem 1rem;overflow-y:auto;}
+.modal-backdrop.open{display:flex;}
+.modal{background:var(--surface);border:1px solid var(--border-med);border-radius:20px;width:100%;max-width:780px;overflow:hidden;animation:modalIn 0.3s cubic-bezier(0.34,1.56,0.64,1);margin:auto;}
+@keyframes modalIn{from{opacity:0;transform:translateY(24px) scale(0.97)}to{opacity:1;transform:none}}
+.modal-hero{position:relative;height:340px;overflow:hidden;}
+.modal-hero img{width:100%;height:100%;object-fit:cover;display:block;}
+.modal-hero-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(15,15,24,1) 0%,rgba(15,15,24,0.45) 50%,rgba(15,15,24,0.1) 100%);}
+.modal-hero-content{position:absolute;bottom:0;left:0;right:0;padding:2rem;}
+.modal-tag-el{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;padding:4px 10px;border-radius:20px;margin-bottom:0.75rem;}
+.modal-title{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;line-height:1.15;color:var(--text);letter-spacing:-0.5px;}
+.modal-close{position:absolute;top:1.25rem;right:1.25rem;width:36px;height:36px;background:rgba(8,8,16,0.75);border:1px solid var(--border-med);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--subtle);font-size:18px;transition:all 0.2s;z-index:10;}
+.modal-close:hover{background:rgba(8,8,16,0.98);color:var(--text);}
+.modal-body{padding:2rem;}
+.modal-section{margin-bottom:1.75rem;}
+.modal-section-label{font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:0.875rem;padding-bottom:0.5rem;border-bottom:1px solid var(--border);}
+.modal-summary{font-size:15px;color:var(--subtle);line-height:1.8;}
+.modal-summary.loading,.modal-deep.loading,.fact-value.loading,.kp-text.loading{color:var(--muted);font-style:italic;}
+.modal-gallery{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;}
+.gallery-img{border-radius:10px;overflow:hidden;aspect-ratio:4/3;background:var(--surface3);}
+.gallery-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.4s ease;}
+.gallery-img:hover img{transform:scale(1.06);}
+.gallery-shimmer{border-radius:10px;aspect-ratio:4/3;background:var(--surface3);animation:shimmer 1.5s ease-in-out infinite;}
+@keyframes shimmer{0%,100%{opacity:0.5}50%{opacity:0.9}}
+.modal-facts{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.fact-card{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;}
+.fact-label{font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:5px;}
+.fact-value{font-size:13px;color:var(--text);line-height:1.55;}
+.modal-extra-imgs{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.extra-img{border-radius:10px;overflow:hidden;height:150px;background:var(--surface3);}
+.extra-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.4s;}
+.extra-img:hover img{transform:scale(1.05);}
+.key-points{display:flex;flex-direction:column;gap:10px;}
+.key-point{display:flex;gap:12px;align-items:flex-start;padding:0.875rem 1rem;background:var(--surface2);border:1px solid var(--border);border-radius:10px;}
+.kp-num{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;color:var(--gold);min-width:20px;margin-top:2px;}
+.kp-text{font-size:13px;color:var(--subtle);line-height:1.6;}
+.modal-deep{font-size:14px;color:var(--subtle);line-height:1.8;}
 @media(max-width:680px){
   .grid{grid-template-columns:1fr;}
   .card.full-width{grid-column:1;}
@@ -160,13 +137,13 @@ header { border-bottom: 1px solid var(--border); padding: 0 2rem; position: stic
   .hero-headline{font-size:32px;}
   .modal-gallery{grid-template-columns:1fr 1fr;}
   .modal-facts{grid-template-columns:1fr;}
-  .modal-hero{height:220px;}
+  .modal-hero{height:240px;}
   .modal-title{font-size:22px;}
+  .modal-extra-imgs{grid-template-columns:1fr 1fr;}
 }
 </style>
 </head>
 <body>
-
 <header>
   <div class="logo">The Daily<span>.</span>Brief</div>
   <div class="header-right">
@@ -187,14 +164,11 @@ header { border-bottom: 1px solid var(--border); padding: 0 2rem; position: stic
 <main class="main">
   <div class="grid">
 
-    <!-- Markets -->
     <div class="card" onclick="openModal('markets')">
       <div class="card-accent acc-blue"></div>
       <div class="card-img-wrap">
-        <img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&q=80&auto=format&fit=crop" alt="Stock market trading floor" loading="lazy" onerror="this.parentElement.classList.add('use-canvas');drawFallback('fb-markets','#0d1117','#4a9eff')">
-        <div class="card-overlay"></div>
-        <div class="overlay-label">NASDAQ & Markets</div>
-        <div class="click-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg> Deep dive</div>
+        <img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&q=80&auto=format&fit=crop" alt="Stock market" loading="lazy">
+        <div class="card-overlay"></div><div class="overlay-label">NASDAQ & Markets</div><div class="click-hint">↗ Deep dive</div>
       </div>
       <div class="card-inner">
         <span class="card-tag tag-blue">📈 NASDAQ & Markets</span>
@@ -208,14 +182,11 @@ header { border-bottom: 1px solid var(--border); padding: 0 2rem; position: stic
       </div>
     </div>
 
-    <!-- AI -->
     <div class="card" onclick="openModal('ai')">
       <div class="card-accent acc-purple"></div>
       <div class="card-img-wrap">
-        <img src="https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=800&q=80&auto=format&fit=crop" alt="Artificial intelligence visualization" loading="lazy">
-        <div class="card-overlay"></div>
-        <div class="overlay-label">AI & Technology</div>
-        <div class="click-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg> Deep dive</div>
+        <img src="https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=800&q=80&auto=format&fit=crop" alt="AI technology" loading="lazy">
+        <div class="card-overlay"></div><div class="overlay-label">AI & Technology</div><div class="click-hint">↗ Deep dive</div>
       </div>
       <div class="card-inner">
         <span class="card-tag tag-purple">🤖 AI & Technology</span>
@@ -224,14 +195,11 @@ header { border-bottom: 1px solid var(--border); padding: 0 2rem; position: stic
       </div>
     </div>
 
-    <!-- Luxury Cars -->
     <div class="card" onclick="openModal('cars')">
       <div class="card-accent acc-gold"></div>
       <div class="card-img-wrap">
         <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&q=80&auto=format&fit=crop" alt="Luxury automobile" loading="lazy">
-        <div class="card-overlay"></div>
-        <div class="overlay-label">Luxury Automotive</div>
-        <div class="click-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg> Deep dive</div>
+        <div class="card-overlay"></div><div class="overlay-label">Luxury Automotive</div><div class="click-hint">↗ Deep dive</div>
       </div>
       <div class="card-inner">
         <span class="card-tag tag-gold">🚗 Luxury Automotive</span>
@@ -240,33 +208,25 @@ header { border-bottom: 1px solid var(--border); padding: 0 2rem; position: stic
       </div>
     </div>
 
-    <!-- Sports Cars -->
     <div class="card" onclick="openModal('sportscars')">
       <div class="card-accent acc-orange"></div>
       <div class="card-img-wrap">
         <img src="https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=800&q=80&auto=format&fit=crop" alt="Ferrari supercar" loading="lazy">
-        <div class="card-overlay"></div>
-        <div class="overlay-label">Dream Garage</div>
-        <div class="click-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg> Deep dive</div>
+        <div class="card-overlay"></div><div class="overlay-label">Dream Garage</div><div class="click-hint">↗ Deep dive</div>
       </div>
       <div class="card-inner">
         <span class="card-tag tag-orange">🏎️ Dream Garage</span>
-        <div class="brand-pills">
-          <span class="bpill">LAMBORGHINI</span><span class="bpill">FERRARI</span><span class="bpill">PORSCHE</span><span class="bpill">MERCEDES-AMG</span>
-        </div>
+        <div class="brand-pills"><span class="bpill">LAMBORGHINI</span><span class="bpill">FERRARI</span><span class="bpill">PORSCHE</span><span class="bpill">MERCEDES-AMG</span></div>
         <h2 class="card-title">Sports car spotlight</h2>
         <p class="card-body loading" id="body-sportscars">Generating spotlight...</p>
       </div>
     </div>
 
-    <!-- Fashion -->
     <div class="card" onclick="openModal('fashion')">
       <div class="card-accent acc-pink"></div>
       <div class="card-img-wrap">
         <img src="https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=800&q=80&auto=format&fit=crop" alt="Luxury fashion" loading="lazy">
-        <div class="card-overlay"></div>
-        <div class="overlay-label">Luxury Fashion</div>
-        <div class="click-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg> Deep dive</div>
+        <div class="card-overlay"></div><div class="overlay-label">Luxury Fashion</div><div class="click-hint">↗ Deep dive</div>
       </div>
       <div class="card-inner">
         <span class="card-tag tag-pink">👜 Luxury Fashion</span>
@@ -275,32 +235,34 @@ header { border-bottom: 1px solid var(--border); padding: 0 2rem; position: stic
       </div>
     </div>
 
-    <!-- Las Vegas -->
     <div class="card" onclick="openModal('vegas')">
       <div class="card-accent acc-teal"></div>
       <div class="card-img-wrap">
-        <img src="https://images.unsplash.com/photo-1605833556294-ea5c2a5f7a6b?w=800&q=80&auto=format&fit=crop" alt="Las Vegas Strip at night" loading="lazy">
-        <div class="card-overlay"></div>
-        <div class="overlay-label">Las Vegas, Nevada</div>
-        <div class="click-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg> Deep dive</div>
+        <img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=800&q=80&auto=format&fit=crop" alt="Las Vegas Strip at night" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1581351721010-8cf859cb14a4?w=800&q=80&auto=format&fit=crop'">
+        <div class="card-overlay"></div><div class="overlay-label">Las Vegas, Nevada</div><div class="click-hint">↗ Deep dive</div>
       </div>
       <div class="card-inner">
         <span class="card-tag tag-teal">🎰 Las Vegas</span>
-        <div class="brand-pills" style="margin-bottom:0.875rem">
-          <span class="vpill">HISTORY</span><span class="vpill">BUSINESS</span><span class="vpill">CULTURE</span><span class="vpill">FOOD</span><span class="vpill">REAL ESTATE</span>
-        </div>
+        <div class="brand-pills"><span class="vpill">HISTORY</span><span class="vpill">BUSINESS</span><span class="vpill">CULTURE</span><span class="vpill">FOOD</span><span class="vpill">REAL ESTATE</span></div>
         <h2 class="card-title">Las Vegas daily fact</h2>
         <p class="card-body loading" id="body-vegas">Generating Las Vegas insight...</p>
       </div>
     </div>
 
-    <!-- Lesson -->
     <div class="card full-width">
       <div class="card-accent acc-green"></div>
       <div class="lesson-inner">
-        <span class="card-tag tag-green">🧠 Today's Lesson</span>
+        <div class="lesson-header">
+          <span class="card-tag tag-green" style="margin-bottom:0">🧠 Today's Lesson</span>
+          <button class="new-lesson-btn" id="new-lesson-btn" onclick="loadNewLesson()">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4v5h5M20 20v-5h-5"/><path d="M4 9a9 9 0 0115 0M20 15a9 9 0 01-15 0"/></svg>
+            New lesson
+          </button>
+        </div>
         <p class="lesson-q loading" id="lesson-q">Generating today's lesson...</p>
-        <button class="reveal-btn hidden" id="reveal-btn" onclick="revealLesson()">Reveal answer</button>
+        <div class="lesson-btns">
+          <button class="reveal-btn hidden" id="reveal-btn" onclick="revealLesson()">Reveal answer</button>
+        </div>
         <div class="lesson-a" id="lesson-a"></div>
       </div>
     </div>
@@ -313,46 +275,74 @@ header { border-bottom: 1px solid var(--border); padding: 0 2rem; position: stic
   </div>
 </main>
 
-<!-- ── MODAL ── -->
+<!-- MODAL -->
 <div class="modal-backdrop" id="modal-backdrop" onclick="closeModalOnBackdrop(event)">
-  <div class="modal" id="modal">
+  <div class="modal">
     <div class="modal-hero">
       <img id="modal-hero-img" src="" alt="">
       <div class="modal-hero-overlay"></div>
       <div class="modal-hero-content">
-        <div class="modal-tag" id="modal-tag"></div>
+        <div class="modal-tag-el" id="modal-tag"></div>
         <h2 class="modal-title" id="modal-title">Loading...</h2>
       </div>
       <div class="modal-close" onclick="closeModal()">✕</div>
     </div>
     <div class="modal-body">
-      <p class="modal-summary loading" id="modal-summary">Generating deep dive...</p>
-      <div class="modal-gallery" id="modal-gallery">
-        <div class="gallery-img loading-img"></div>
-        <div class="gallery-img loading-img"></div>
-        <div class="gallery-img loading-img"></div>
+      <div class="modal-section">
+        <div class="modal-section-label">Today's briefing</div>
+        <p class="modal-summary loading" id="modal-summary">Generating...</p>
       </div>
-      <div class="modal-facts" id="modal-facts">
-        <div class="fact-card"><div class="fact-label">Did you know</div><div class="fact-value loading" id="fact-1">Loading...</div></div>
-        <div class="fact-card"><div class="fact-label">Key insight</div><div class="fact-value loading" id="fact-2">Loading...</div></div>
-        <div class="fact-card"><div class="fact-label">Trend watch</div><div class="fact-value loading" id="fact-3">Loading...</div></div>
-        <div class="fact-card"><div class="fact-label">By the numbers</div><div class="fact-value loading" id="fact-4">Loading...</div></div>
+      <div class="modal-section">
+        <div class="modal-section-label">Visual context</div>
+        <div class="modal-gallery" id="modal-gallery">
+          <div class="gallery-shimmer"></div><div class="gallery-shimmer"></div><div class="gallery-shimmer"></div>
+        </div>
       </div>
-      <div class="modal-deep-label">Full analysis</div>
-      <p class="modal-deep loading" id="modal-deep">Generating full analysis...</p>
+      <div class="modal-section">
+        <div class="modal-section-label">Quick facts</div>
+        <div class="modal-facts">
+          <div class="fact-card"><div class="fact-label" id="fl-1">Did you know</div><div class="fact-value loading" id="fact-1">Loading...</div></div>
+          <div class="fact-card"><div class="fact-label" id="fl-2">Key insight</div><div class="fact-value loading" id="fact-2">Loading...</div></div>
+          <div class="fact-card"><div class="fact-label" id="fl-3">Trend watch</div><div class="fact-value loading" id="fact-3">Loading...</div></div>
+          <div class="fact-card"><div class="fact-label" id="fl-4">By the numbers</div><div class="fact-value loading" id="fact-4">Loading...</div></div>
+        </div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-label">More visuals</div>
+        <div class="modal-extra-imgs" id="modal-extra-imgs">
+          <div class="extra-img"></div><div class="extra-img"></div>
+        </div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-label">5 things to know</div>
+        <div class="key-points">
+          <div class="key-point"><span class="kp-num">01</span><span class="kp-text loading" id="kp-1">Loading...</span></div>
+          <div class="key-point"><span class="kp-num">02</span><span class="kp-text loading" id="kp-2">Loading...</span></div>
+          <div class="key-point"><span class="kp-num">03</span><span class="kp-text loading" id="kp-3">Loading...</span></div>
+          <div class="key-point"><span class="kp-num">04</span><span class="kp-text loading" id="kp-4">Loading...</span></div>
+          <div class="key-point"><span class="kp-num">05</span><span class="kp-text loading" id="kp-5">Loading...</span></div>
+        </div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-label">Full analysis</div>
+        <p class="modal-deep loading" id="modal-deep">Generating...</p>
+      </div>
     </div>
   </div>
 </div>
 
 <script>
-const API_KEY = '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';
-const TZ = 'America/Los_Angeles';
-const now = new Date();
-const dateStr = now.toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric',timeZone:TZ});
-const hour = parseInt(now.toLocaleTimeString('en-US',{hour:'numeric',hour12:false,timeZone:TZ}));
-const greeting = hour<12?'Good morning':hour<17?'Good afternoon':'Good evening';
-document.getElementById('header-date').textContent = now.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric',timeZone:TZ});
-document.getElementById('hero-headline').innerHTML = `${greeting},<br>Cameron.`;
+// ── PUT YOUR NEW API KEY HERE ──────────────────────────────
+const API_KEY = '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';
+// ──────────────────────────────────────────────────────────
+
+const TZ='America/Los_Angeles';
+const now=new Date();
+const dateStr=now.toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric',timeZone:TZ});
+const hour=parseInt(now.toLocaleTimeString('en-US',{hour:'numeric',hour12:false,timeZone:TZ}));
+const greeting=hour<12?'Good morning':hour<17?'Good afternoon':'Good evening';
+document.getElementById('header-date').textContent=now.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric',timeZone:TZ});
+document.getElementById('hero-headline').innerHTML=`${greeting},<br>Cameron.`;
 
 function updateCountdown(){
   const la=new Date(new Date().toLocaleString('en-US',{timeZone:TZ}));
@@ -374,154 +364,146 @@ function loadTickers(){
   },500);
 }
 
-// ── Modal config ──
-const MODAL_CONFIG = {
-  markets:{
-    tag:'📈 NASDAQ & Markets', tagClass:'tag-blue',
-    title:'Markets deep dive',
+const CONFIGS={
+  markets:{tag:'📈 NASDAQ & Markets',tagClass:'tag-blue',title:'Markets deep dive',
     heroImg:'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=1200&q=85&auto=format&fit=crop',
-    gallery:[
-      'https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?w=600&q=80&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1535320903710-d993d3d77d29?w=600&q=80&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1642790106117-e829e14a795f?w=600&q=80&auto=format&fit=crop'
-    ],
-    summaryPrompt:`Write a rich 4-sentence market analysis for ${dateStr}. Cover NASDAQ performance, key sector movements, macro factors (Fed, inflation, jobs), and what investors should watch. Plain text only.`,
-    facts:[
-      {label:'Did you know',prompt:`One surprising NASDAQ historical fact. Under 15 words.`},
-      {label:'Key insight',prompt:`One key insight about today's market structure. Under 15 words.`},
-      {label:'Trend watch',prompt:`One major market trend to watch right now. Under 15 words.`},
-      {label:'By the numbers',prompt:`One striking market statistic for ${dateStr}. Under 15 words.`}
-    ],
-    deepPrompt:`Write a thorough 6-sentence educational breakdown of how the NASDAQ works, what moves it, and how retail investors can think about it intelligently. Plain text only.`
+    gallery:['https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?w=600&q=80&auto=format&fit=crop','https://images.unsplash.com/photo-1535320903710-d993d3d77d29?w=600&q=80&auto=format&fit=crop','https://images.unsplash.com/photo-1642790106117-e829e14a795f?w=600&q=80&auto=format&fit=crop'],
+    extraImgs:['https://images.unsplash.com/photo-1579226905180-636b76d96082?w=600&q=80&auto=format&fit=crop','https://images.unsplash.com/photo-1569025690938-a00729c9e1f9?w=600&q=80&auto=format&fit=crop'],
+    factLabels:['Did you know','Key insight','Trend watch','By the numbers'],
+    summaryP:`Write a rich 4-sentence NASDAQ market analysis for ${dateStr}. Cover mood, key sectors, a macro factor, and what to watch. Plain text only.`,
+    factsP:[`One surprising NASDAQ history fact. Max 20 words.`,`One key insight about current market structure. Max 20 words.`,`The biggest market trend to watch right now. Max 20 words.`,`One striking market statistic. Max 20 words.`],
+    pointsP:`Give 5 things every investor should know about how the NASDAQ works. Number 1-5, one per line, each under 25 words. Plain text only.`,
+    deepP:`Write a 5-sentence educational breakdown of how the NASDAQ works, what moves it, and how a smart retail investor should think about it. Plain text only.`
   },
-  ai:{
-    tag:'🤖 AI & Technology', tagClass:'tag-purple',
-    title:'AI & Tech deep dive',
+  ai:{tag:'🤖 AI & Technology',tagClass:'tag-purple',title:'AI & Tech deep dive',
     heroImg:'https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=1200&q=85&auto=format&fit=crop',
-    gallery:[
-      'https://images.unsplash.com/photo-1555255707-c07966088b7b?w=600&q=80&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=600&q=80&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=600&q=80&auto=format&fit=crop'
-    ],
-    summaryPrompt:`Write a rich 4-sentence AI and technology briefing for ${dateStr}. Cover a major development, why it matters, a business implication, and a future trend. Plain text only.`,
-    facts:[
-      {label:'Did you know',prompt:`One surprising AI fact most people don't know. Under 15 words.`},
-      {label:'Key insight',prompt:`One key insight about where AI is heading. Under 15 words.`},
-      {label:'Trend watch',prompt:`The most important AI trend to watch right now. Under 15 words.`},
-      {label:'By the numbers',prompt:`One striking AI industry statistic. Under 15 words.`}
-    ],
-    deepPrompt:`Write a thorough 6-sentence educational breakdown of how large language models work, what makes them powerful, and what their limitations are. Use an analogy. Plain text only.`
+    gallery:['https://images.unsplash.com/photo-1555255707-c07966088b7b?w=600&q=80&auto=format&fit=crop','https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=600&q=80&auto=format&fit=crop','https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=600&q=80&auto=format&fit=crop'],
+    extraImgs:['https://images.unsplash.com/photo-1531746790731-6c087fecd65a?w=600&q=80&auto=format&fit=crop','https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=600&q=80&auto=format&fit=crop'],
+    factLabels:['Did you know','Key insight','Trend watch','By the numbers'],
+    summaryP:`Write a rich 4-sentence AI and technology briefing for ${dateStr}. Cover a major development, why it matters, a business implication, and a future trend. Plain text only.`,
+    factsP:[`One surprising AI fact most people don't know. Max 20 words.`,`One key insight about where AI is heading. Max 20 words.`,`The most important AI trend right now. Max 20 words.`,`One striking AI industry statistic. Max 20 words.`],
+    pointsP:`Give 5 things everyone should understand about how AI large language models work. Number 1-5, one per line, each under 25 words. Plain text only.`,
+    deepP:`Write a 5-sentence educational breakdown of how large language models work, what makes them powerful, their limitations, and what comes next. Use an analogy. Plain text only.`
   },
-  cars:{
-    tag:'🚗 Luxury Automotive', tagClass:'tag-gold',
-    title:'Luxury cars deep dive',
+  cars:{tag:'🚗 Luxury Automotive',tagClass:'tag-gold',title:'Luxury cars deep dive',
     heroImg:'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=1200&q=85&auto=format&fit=crop',
-    gallery:[
-      'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?w=600&q=80&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1525609004556-c46c7d6cf023?w=600&q=80&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1493238792000-8113da705763?w=600&q=80&auto=format&fit=crop'
-    ],
-    summaryPrompt:`Write a rich 4-sentence luxury automotive briefing for ${dateStr}. Cover market trends, a notable brand or model, engineering insight, and investment value. Plain text only.`,
-    facts:[
-      {label:'Did you know',prompt:`One surprising luxury car manufacturing fact. Under 15 words.`},
-      {label:'Key insight',prompt:`One key insight about the luxury car market right now. Under 15 words.`},
-      {label:'Trend watch',prompt:`The biggest trend in luxury automotive for 2026. Under 15 words.`},
-      {label:'By the numbers',prompt:`One striking luxury car industry statistic. Under 15 words.`}
-    ],
-    deepPrompt:`Write a thorough 6-sentence educational breakdown of what separates a true luxury car from a merely expensive one — covering engineering, materials, heritage, and ownership experience. Plain text only.`
+    gallery:['https://images.unsplash.com/photo-1549399542-7e3f8b79c341?w=600&q=80&auto=format&fit=crop','https://images.unsplash.com/photo-1525609004556-c46c7d6cf023?w=600&q=80&auto=format&fit=crop','https://images.unsplash.com/photo-1493238792000-8113da705763?w=600&q=80&auto=format&fit=crop'],
+    extraImgs:['https://images.unsplash.com/photo-1562141961-b8d9b92b4fe8?w=600&q=80&auto=format&fit=crop','https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=600&q=80&auto=format&fit=crop'],
+    factLabels:['Did you know','Key insight','Trend watch','By the numbers'],
+    summaryP:`Write a rich 4-sentence luxury automotive briefing for ${dateStr}. Cover market trends, a notable brand, engineering insight, and investment value. Plain text only.`,
+    factsP:[`One surprising luxury car manufacturing fact. Max 20 words.`,`One key insight about the luxury car market. Max 20 words.`,`The biggest luxury automotive trend for 2026. Max 20 words.`,`One striking luxury car industry statistic. Max 20 words.`],
+    pointsP:`Give 5 things that separate a true luxury car from a merely expensive one. Number 1-5, one per line, each under 25 words. Plain text only.`,
+    deepP:`Write a 5-sentence educational breakdown of what makes a car truly luxury — covering engineering, materials, heritage, bespoke options, and ownership experience. Plain text only.`
   },
-  sportscars:{
-    tag:'🏎️ Dream Garage', tagClass:'tag-orange',
-    title:'Lamborghini • Ferrari • Porsche • AMG',
+  sportscars:{tag:'🏎️ Dream Garage',tagClass:'tag-orange',title:'Lamborghini • Ferrari • Porsche • AMG',
     heroImg:'https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=1200&q=85&auto=format&fit=crop',
-    gallery:[
-      'https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=600&q=80&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1592198084033-aade902d1aae?w=600&q=80&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?w=600&q=80&auto=format&fit=crop'
-    ],
-    summaryPrompt:`Write a rich 4-sentence briefing about Lamborghini, Ferrari, Porsche, or Mercedes-AMG for ${dateStr}. Cover a model, engineering detail, market position, and collector insight. Plain text only.`,
-    facts:[
-      {label:'Lamborghini',prompt:`One fascinating Lamborghini fact. Under 15 words.`},
-      {label:'Ferrari',prompt:`One fascinating Ferrari fact. Under 15 words.`},
-      {label:'Porsche',prompt:`One fascinating Porsche fact. Under 15 words.`},
-      {label:'Mercedes-AMG',prompt:`One fascinating Mercedes-AMG fact. Under 15 words.`}
-    ],
-    deepPrompt:`Write a thorough 6-sentence breakdown comparing Lamborghini, Ferrari, Porsche, and Mercedes-AMG — their philosophies, buyer profiles, engineering approaches, and what makes each brand irreplaceable. Plain text only.`
+    gallery:['https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=600&q=80&auto=format&fit=crop','https://images.unsplash.com/photo-1592198084033-aade902d1aae?w=600&q=80&auto=format&fit=crop','https://images.unsplash.com/photo-1553440569-bcc63803a83d?w=600&q=80&auto=format&fit=crop'],
+    extraImgs:['https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?w=600&q=80&auto=format&fit=crop','https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=600&q=80&auto=format&fit=crop'],
+    factLabels:['Lamborghini','Ferrari','Porsche','Mercedes-AMG'],
+    summaryP:`Write a rich 4-sentence briefing about Lamborghini, Ferrari, Porsche, or Mercedes-AMG for ${dateStr}. Cover a model, engineering detail, market position, and collector insight. Plain text only.`,
+    factsP:[`One fascinating Lamborghini fact. Max 20 words.`,`One fascinating Ferrari fact. Max 20 words.`,`One fascinating Porsche fact. Max 20 words.`,`One fascinating Mercedes-AMG fact. Max 20 words.`],
+    pointsP:`Give 5 things that make Lamborghini, Ferrari, Porsche, and AMG each unique. Number 1-5, each under 25 words. Plain text only.`,
+    deepP:`Write a 5-sentence breakdown comparing Lamborghini, Ferrari, Porsche, and Mercedes-AMG — their philosophies, engineering, buyer profiles, and what makes each irreplaceable. Plain text only.`
   },
-  fashion:{
-    tag:'👜 Luxury Fashion', tagClass:'tag-pink',
-    title:'Luxury fashion deep dive',
+  fashion:{tag:'👜 Luxury Fashion',tagClass:'tag-pink',title:'Luxury fashion deep dive',
     heroImg:'https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=1200&q=85&auto=format&fit=crop',
-    gallery:[
-      'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=600&q=80&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=600&q=80&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1445205170230-053b83016050?w=600&q=80&auto=format&fit=crop'
-    ],
-    summaryPrompt:`Write a rich 4-sentence luxury fashion briefing for ${dateStr}. Cover a specific house or designer, a trend, business strategy, and what drives the luxury pricing model. Plain text only.`,
-    facts:[
-      {label:'Did you know',prompt:`One surprising luxury fashion business fact. Under 15 words.`},
-      {label:'Key insight',prompt:`One key insight about luxury fashion economics. Under 15 words.`},
-      {label:'Trend watch',prompt:`The biggest luxury fashion trend right now. Under 15 words.`},
-      {label:'By the numbers',prompt:`One striking luxury fashion industry statistic. Under 15 words.`}
-    ],
-    deepPrompt:`Write a thorough 6-sentence educational breakdown of why luxury fashion commands its prices — covering heritage, scarcity, craftsmanship, brand strategy, and the psychology of luxury. Plain text only.`
+    gallery:['https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=600&q=80&auto=format&fit=crop','https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=600&q=80&auto=format&fit=crop','https://images.unsplash.com/photo-1445205170230-053b83016050?w=600&q=80&auto=format&fit=crop'],
+    extraImgs:['https://images.unsplash.com/photo-1483985988355-763728e1935b?w=600&q=80&auto=format&fit=crop','https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=600&q=80&auto=format&fit=crop'],
+    factLabels:['Did you know','Key insight','Trend watch','By the numbers'],
+    summaryP:`Write a rich 4-sentence luxury fashion briefing for ${dateStr}. Cover a specific house or designer, a trend, business strategy, and what drives luxury pricing. Plain text only.`,
+    factsP:[`One surprising luxury fashion business fact. Max 20 words.`,`One key insight about luxury fashion economics. Max 20 words.`,`The biggest luxury fashion trend right now. Max 20 words.`,`One striking luxury fashion industry statistic. Max 20 words.`],
+    pointsP:`Give 5 things that explain why luxury fashion commands such high prices. Number 1-5, each under 25 words. Plain text only.`,
+    deepP:`Write a 5-sentence educational breakdown of why luxury fashion commands its prices — covering heritage, scarcity, craftsmanship, brand strategy, and the psychology of luxury. Plain text only.`
   },
-  vegas:{
-    tag:'🎰 Las Vegas', tagClass:'tag-teal',
-    title:'Las Vegas deep dive',
-    heroImg:'https://images.unsplash.com/photo-1605833556294-ea5c2a5f7a6b?w=1200&q=85&auto=format&fit=crop',
-    gallery:[
-      'https://images.unsplash.com/photo-1581351721010-8cf859cb14a4?w=600&q=80&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1474044159687-1ee9f3a51722?w=600&q=80&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=600&q=80&auto=format&fit=crop'
-    ],
-    summaryPrompt:`Write a rich 4-sentence Las Vegas briefing for ${dateStr}. Cover history, business, real estate or entertainment. Make it specific and surprising. Plain text only.`,
-    facts:[
-      {label:'History',prompt:`One surprising Las Vegas history fact. Under 15 words.`},
-      {label:'Casino business',prompt:`One fascinating Las Vegas casino business fact. Under 15 words.`},
-      {label:'Real estate',prompt:`One striking Las Vegas real estate fact. Under 15 words.`},
-      {label:'By the numbers',prompt:`One surprising Las Vegas economic statistic. Under 15 words.`}
-    ],
-    deepPrompt:`Write a thorough 6-sentence educational breakdown of how Las Vegas works as a business ecosystem — covering casino economics, tourism, real estate, entertainment, and what makes it unique in the world. Plain text only.`
+  vegas:{tag:'🎰 Las Vegas',tagClass:'tag-teal',title:'Las Vegas deep dive',
+    heroImg:'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=1200&q=85&auto=format&fit=crop',
+    gallery:['https://images.unsplash.com/photo-1581351721010-8cf859cb14a4?w=600&q=80&auto=format&fit=crop','https://images.unsplash.com/photo-1474044159687-1ee9f3a51722?w=600&q=80&auto=format&fit=crop','https://images.unsplash.com/photo-1605833556294-ea5c2a5f7a6b?w=600&q=80&auto=format&fit=crop'],
+    extraImgs:['https://images.unsplash.com/photo-1622547748225-3fc4abd2cca0?w=600&q=80&auto=format&fit=crop','https://images.unsplash.com/photo-1697185786388-dca6fb27a31d?w=600&q=80&auto=format&fit=crop'],
+    factLabels:['History','Casino business','Real estate','By the numbers'],
+    summaryP:`Write a rich 4-sentence Las Vegas, Nevada briefing for ${dateStr}. Make it specific and surprising — cover history, business, real estate, or entertainment. Plain text only.`,
+    factsP:[`One surprising Las Vegas history fact. Max 20 words.`,`One fascinating Las Vegas casino business fact. Max 20 words.`,`One striking Las Vegas real estate fact. Max 20 words.`,`One surprising Las Vegas economic statistic. Max 20 words.`],
+    pointsP:`Give 5 surprising things most people don't know about Las Vegas, Nevada. Number 1-5, each under 25 words. Plain text only.`,
+    deepP:`Write a 5-sentence educational breakdown of how Las Vegas works as a business ecosystem — casino economics, tourism, real estate, entertainment, and what makes it unique. Plain text only.`
   }
 };
 
-// ── Claude API ──
-async function ask(prompt, maxTokens=200){
-  if(API_KEY==='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') return null;
+async function ask(prompt,maxTokens=200){
   const res=await fetch('https://api.anthropic.com/v1/messages',{
     method:'POST',
     headers:{'Content-Type':'application/json','x-api-key':API_KEY,'anthropic-version':'2023-06-01'},
     body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:maxTokens,messages:[{role:'user',content:prompt}]})
   });
-  if(!res.ok) throw new Error('API '+res.status);
+  if(!res.ok)throw new Error('API '+res.status);
   return (await res.json()).content[0].text.trim();
 }
 
+function setText(id,text){const el=document.getElementById(id);if(el){el.textContent=text;el.classList.remove('loading');}}
+
+async function openModal(key){
+  const cfg=CONFIGS[key];
+  document.getElementById('modal-backdrop').classList.add('open');
+  document.body.style.overflow='hidden';
+  const heroImg=document.getElementById('modal-hero-img');
+  heroImg.src=cfg.heroImg;
+  heroImg.onerror=()=>{heroImg.src='https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?w=1200&q=85&auto=format&fit=crop';};
+  const tagEl=document.getElementById('modal-tag');
+  tagEl.textContent=cfg.tag;tagEl.className=`modal-tag-el ${cfg.tagClass}`;
+  document.getElementById('modal-title').textContent=cfg.title;
+  document.getElementById('modal-gallery').innerHTML=cfg.gallery.map(src=>`<div class="gallery-img"><img src="${src}" alt="" loading="lazy"></div>`).join('');
+  document.getElementById('modal-extra-imgs').innerHTML=cfg.extraImgs.map(src=>`<div class="extra-img"><img src="${src}" alt="" loading="lazy"></div>`).join('');
+  ['modal-summary','modal-deep','fact-1','fact-2','fact-3','fact-4','kp-1','kp-2','kp-3','kp-4','kp-5'].forEach(id=>{const el=document.getElementById(id);if(el){el.textContent='Generating...';el.classList.add('loading');}});
+  cfg.factLabels.forEach((label,i)=>{const el=document.getElementById(`fl-${i+1}`);if(el)el.textContent=label;});
+  async function loadPoints(){
+    const raw=await ask(cfg.pointsP,350);
+    raw.split('\n').filter(l=>l.trim()).slice(0,5).forEach((line,i)=>{
+      setText(`kp-${i+1}`,line.replace(/^\d+[\.\)]\s*/,'').trim());
+    });
+  }
+  try{
+    await Promise.all([
+      ask(cfg.summaryP,300).then(t=>setText('modal-summary',t)),
+      ask(cfg.factsP[0],60).then(t=>setText('fact-1',t)),
+      ask(cfg.factsP[1],60).then(t=>setText('fact-2',t)),
+      ask(cfg.factsP[2],60).then(t=>setText('fact-3',t)),
+      ask(cfg.factsP[3],60).then(t=>setText('fact-4',t)),
+      loadPoints(),
+      ask(cfg.deepP,400).then(t=>setText('modal-deep',t)),
+    ]);
+  }catch(e){
+    ['modal-summary','fact-1','fact-2','fact-3','fact-4','kp-1','kp-2','kp-3','kp-4','kp-5','modal-deep'].forEach(id=>setText(id,'Error loading — check your API key is valid.'));
+  }
+}
+
+function closeModal(){document.getElementById('modal-backdrop').classList.remove('open');document.body.style.overflow='';}
+function closeModalOnBackdrop(e){if(e.target===document.getElementById('modal-backdrop'))closeModal();}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
+
 async function loadSection(id,prompt){
   const el=document.getElementById(`body-${id}`);
-  try{ el.textContent=await ask(prompt,150)||getDemoContent(id); el.classList.remove('loading'); }
-  catch(e){ el.textContent=getDemoContent(id); el.classList.remove('loading'); }
+  try{el.textContent=await ask(prompt,150);el.classList.remove('loading');}
+  catch(e){el.textContent='Error loading content.';el.classList.remove('loading');}
 }
 
 async function loadLesson(){
   const qEl=document.getElementById('lesson-q'),aEl=document.getElementById('lesson-a'),btn=document.getElementById('reveal-btn');
+  qEl.textContent="Generating today's lesson...";qEl.classList.add('loading');
+  aEl.classList.remove('visible');btn.classList.add('hidden');
   try{
-    const raw=await ask(`Give one educational financial or business lesson for ${dateStr}. Format:\nQ: [question under 12 words]\nA: [answer under 20 words]\nPlain text only.`,150);
-    if(raw){
-      const lines=raw.split('\n').filter(l=>l.trim());
-      qEl.textContent=(lines.find(l=>l.startsWith('Q:'))?.replace('Q:','').trim())||raw;
-      aEl.textContent=(lines.find(l=>l.startsWith('A:'))?.replace('A:','').trim())||'';
-      qEl.classList.remove('loading');btn.classList.remove('hidden');
-    } else { setDemoLesson(); }
-  }catch(e){ setDemoLesson(); }
+    const topics=['market mechanics','investing concepts','luxury brand economics','tech business models','compound interest','stock market history','real estate investing','casino economics','behavioral finance','Warren Buffett investing principles'];
+    const topic=topics[Math.floor(Math.random()*topics.length)];
+    const raw=await ask(`Give one educational lesson about "${topic}". Format exactly:\nQ: [interesting question under 14 words]\nA: [clear answer under 22 words]\nPlain text only.`,150);
+    const lines=raw.split('\n').filter(l=>l.trim());
+    qEl.textContent=(lines.find(l=>l.startsWith('Q:'))?.replace('Q:','').trim())||raw;
+    aEl.textContent=(lines.find(l=>l.startsWith('A:'))?.replace('A:','').trim())||'';
+    qEl.classList.remove('loading');btn.classList.remove('hidden');
+  }catch(e){qEl.textContent='Error loading lesson — check your API key.';qEl.classList.remove('loading');}
 }
 
-function setDemoLesson(){
-  document.getElementById('lesson-q').textContent="What makes a luxury brand genuinely defensible against copycats?";
-  document.getElementById('lesson-q').classList.remove('loading');
-  document.getElementById('lesson-a').textContent="Heritage, craftsmanship, and scarcity — things that take decades to build and can't be bought overnight.";
-  document.getElementById('reveal-btn').classList.remove('hidden');
+async function loadNewLesson(){
+  const btn=document.getElementById('new-lesson-btn');
+  btn.classList.add('spinning');
+  await loadLesson();
+  btn.classList.remove('spinning');
 }
 
 function revealLesson(){
@@ -529,101 +511,11 @@ function revealLesson(){
   document.getElementById('reveal-btn').classList.add('hidden');
 }
 
-// ── Modal ──
-async function openModal(key){
-  const cfg=MODAL_CONFIG[key];
-  const backdrop=document.getElementById('modal-backdrop');
-  backdrop.classList.add('open');
-  document.body.style.overflow='hidden';
-
-  // Set hero
-  document.getElementById('modal-hero-img').src=cfg.heroImg;
-  const tagEl=document.getElementById('modal-tag');
-  tagEl.textContent=cfg.tag;
-  tagEl.className=`modal-tag ${cfg.tagClass}`;
-  document.getElementById('modal-title').textContent=cfg.title;
-
-  // Set gallery
-  const gallery=document.getElementById('modal-gallery');
-  gallery.innerHTML=cfg.gallery.map(src=>`<div class="gallery-img"><img src="${src}" alt="" loading="lazy"></div>`).join('');
-
-  // Reset content
-  ['modal-summary','modal-deep','fact-1','fact-2','fact-3','fact-4'].forEach(id=>{
-    const el=document.getElementById(id);
-    el.textContent='Generating...';
-    el.classList.add('loading');
-  });
-  const factLabels=cfg.facts.map(f=>f.label);
-  document.querySelectorAll('#modal-facts .fact-label').forEach((el,i)=>{ if(factLabels[i]) el.textContent=factLabels[i]; });
-
-  // Load content
-  try{
-    const [summary,f1,f2,f3,f4,deep]=await Promise.all([
-      ask(cfg.summaryPrompt,300),
-      ask(cfg.facts[0].prompt,50),
-      ask(cfg.facts[1].prompt,50),
-      ask(cfg.facts[2].prompt,50),
-      ask(cfg.facts[3].prompt,50),
-      ask(cfg.deepPrompt,400),
-    ]);
-    setText('modal-summary', summary||'Deep dive content powered by Claude AI.');
-    setText('fact-1',f1||'—'); setText('fact-2',f2||'—');
-    setText('fact-3',f3||'—'); setText('fact-4',f4||'—');
-    setText('modal-deep',deep||'Full analysis powered by Claude AI.');
-  } catch(e){
-    setText('modal-summary','Unable to load — check your API key.');
-    ['fact-1','fact-2','fact-3','fact-4','modal-deep'].forEach(id=>setText(id,'—'));
-  }
-}
-
-function setText(id, text){
-  const el=document.getElementById(id);
-  el.textContent=text;
-  el.classList.remove('loading');
-}
-
-function closeModal(){
-  document.getElementById('modal-backdrop').classList.remove('open');
-  document.body.style.overflow='';
-}
-
-function closeModalOnBackdrop(e){
-  if(e.target===document.getElementById('modal-backdrop')) closeModal();
-}
-
-document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeModal(); });
-
-// ── Demo content ──
-const DEMOS = {
-  markets:"Markets are trading cautiously as investors digest mixed signals from the Federal Reserve. Tech stocks on the NASDAQ are holding steady while energy sectors see rotation. The 10-year Treasury yield remains the key macro factor to watch.",
-  ai:"Anthropic's Claude 4 series introduced extended reasoning that allows the model to silently think before responding — like a chess grandmaster considering future moves before touching a piece.",
-  cars:"The Bentley Bentayga continues to dominate the ultra-luxury SUV segment, with resale values holding at 85% of MSRP after two years, thanks to Bentley's bespoke personalization program.",
-  sportscars:"Ferrari's SF90 XX Stradale has become the most technically advanced road car the company has produced, with a hybrid system delivering 1,016 horsepower. Early collectors are trading allocation slots for €200,000 above list.",
-  fashion:"Bottega Veneta's quiet luxury strategy is proving that the loudest brands aren't always most profitable. Their intrecciato leather goods outsell peak-logomania competitors by leaning into craftsmanship.",
-  vegas:"When Nevada legalized gambling in 1931, Las Vegas had just 5,000 residents. Bugsy Siegel's Flamingo opened in 1946 and invented the modern resort casino — today the Strip generates over $7 billion annually."
-};
-function getDemoContent(id){ return DEMOS[id]||'Content will appear here.'; }
-
-// ── Load all ──
 async function loadAll(){
   loadTickers();
   ['markets','ai','cars','sportscars','fashion','vegas'].forEach(id=>{
     const el=document.getElementById(`body-${id}`);el.textContent='Generating...';el.classList.add('loading');
   });
-  document.getElementById('lesson-q').textContent="Generating today's lesson...";
-  document.getElementById('lesson-q').classList.add('loading');
-  document.getElementById('lesson-a').classList.remove('visible');
-  document.getElementById('reveal-btn').classList.add('hidden');
-
-  if(API_KEY==='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'){
-    Object.entries(DEMOS).forEach(([id,txt])=>{
-      const el=document.getElementById(`body-${id}`);
-      if(el){el.textContent=txt;el.classList.remove('loading');}
-    });
-    setDemoLesson();
-    return;
-  }
-
   await Promise.all([
     loadSection('markets',`Sharp financial educator. 3 sentences on NASDAQ and US markets for ${dateStr}. Cover mood, one sector, one macro driver. Plain text only.`),
     loadSection('ai',`Technology educator. One fascinating AI or tech insight for ${dateStr}. Specific with real-world analogy. 2 sentences. Plain text only.`),
