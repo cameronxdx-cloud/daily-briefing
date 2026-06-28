@@ -20,7 +20,7 @@ async function ask(prompt) {
     },
     body: JSON.stringify({
       model: "claude-sonnet-4-6",
-      max_tokens: 60,
+      max_tokens: 55,
       messages: [{ role: "user", content: prompt }],
     }),
   });
@@ -36,31 +36,28 @@ async function main() {
   console.log(`🌅 Starting daily briefing — ${today}`);
   console.log("⏳ Generating briefing sections...");
 
-  const [markets, ai, cars, sportscars, fashion, vegas, lesson] = await Promise.all([
-    ask(`NASDAQ mood for ${today} in exactly 1 short sentence. Plain text only.`),
-    ask(`One AI or tech fact for ${today} in exactly 1 short sentence. Plain text only.`),
-    ask(`One luxury car fact for ${today} in exactly 1 short sentence, name a brand. Plain text only.`),
-    ask(`One fact about Lamborghini, Ferrari, Porsche, or Mercedes-AMG for ${today} in exactly 1 short sentence. Plain text only.`),
-    ask(`One luxury fashion fact for ${today} in exactly 1 short sentence, name a house. Plain text only.`),
-    ask(`One surprising Las Vegas fact for ${today} in exactly 1 short sentence. Plain text only.`),
-    ask(`Financial lesson for ${today}. Format: Q: [max 7 words] A: [max 10 words]. Plain text only.`),
+  const [markets, ai, cars, sportscars, fashion, vegas, energy, spacex, lesson] = await Promise.all([
+    ask(`NASDAQ mood for ${today}. 1 short sentence. Plain text only.`),
+    ask(`One AI or tech fact for ${today}. 1 short sentence. Plain text only.`),
+    ask(`One luxury car fact for ${today}, name a brand. 1 short sentence. Plain text only.`),
+    ask(`One fact about Lamborghini, Ferrari, Porsche, or AMG for ${today}. 1 short sentence. Plain text only.`),
+    ask(`One luxury fashion fact for ${today}, name a house. 1 short sentence. Plain text only.`),
+    ask(`One surprising Las Vegas fact for ${today}. 1 short sentence. Plain text only.`),
+    ask(`One energy market fact for ${today} — oil, solar, or how AI affects power demand. 1 short sentence. Plain text only.`),
+    ask(`One SpaceX or space industry fact for ${today} — Starship, Starlink, or launches. 1 short sentence. Plain text only.`),
+    ask(`Financial lesson for ${today}. Format: Q:[max 6 words] A:[max 9 words]. Plain text only.`),
   ]);
 
-  const message = `☀️ *Your 6 AM Briefing*
-📈 *MARKETS*
-${markets}
-🤖 *AI & TECH*
-${ai}
-🚗 *LUXURY CARS*
-${cars}
-🏎️ *LAMBO • FERRARI • PORSCHE • AMG*
-${sportscars}
-👜 *FASHION*
-${fashion}
-🎰 *LAS VEGAS*
-${vegas}
-🧠 *LESSON*
-${lesson}
+  const message = `☀️ *6AM Brief — ${today}*
+📈 ${markets}
+🤖 ${ai}
+🚗 ${cars}
+🏎️ ${sportscars}
+👜 ${fashion}
+🎰 ${vegas}
+⚡ ${energy}
+🚀 ${spacex}
+🧠 ${lesson}
 _Have a great day. 🤝_`;
 
   console.log("\n── Preview ──────────────────────────────");
