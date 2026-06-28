@@ -345,7 +345,7 @@ header { border-bottom: 1px solid var(--border); padding: 0 2rem; position: stic
 </div>
 
 <script>
-const API_KEY = 'YOUR_ANTHROPIC_API_KEY_HERE';
+const API_KEY = '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';
 const TZ = 'America/Los_Angeles';
 const now = new Date();
 const dateStr = now.toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric',timeZone:TZ});
@@ -488,7 +488,7 @@ const MODAL_CONFIG = {
 
 // ── Claude API ──
 async function ask(prompt, maxTokens=200){
-  if(API_KEY==='YOUR_ANTHROPIC_API_KEY_HERE') return null;
+  if(API_KEY==='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') return null;
   const res=await fetch('https://api.anthropic.com/v1/messages',{
     method:'POST',
     headers:{'Content-Type':'application/json','x-api-key':API_KEY,'anthropic-version':'2023-06-01'},
@@ -615,7 +615,7 @@ async function loadAll(){
   document.getElementById('lesson-a').classList.remove('visible');
   document.getElementById('reveal-btn').classList.add('hidden');
 
-  if(API_KEY==='YOUR_ANTHROPIC_API_KEY_HERE'){
+  if(API_KEY==='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'){
     Object.entries(DEMOS).forEach(([id,txt])=>{
       const el=document.getElementById(`body-${id}`);
       if(el){el.textContent=txt;el.classList.remove('loading');}
