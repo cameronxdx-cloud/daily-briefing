@@ -332,9 +332,7 @@ header{border-bottom:1px solid var(--border);padding:0 2rem;position:sticky;top:
 </div>
 
 <script>
-// ── PUT YOUR NEW API KEY HERE ──────────────────────────────
-const API_KEY = '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';
-// ──────────────────────────────────────────────────────────
+// API calls routed through Cloudflare Worker — no key needed here
 
 const TZ='America/Los_Angeles';
 const now=new Date();
@@ -428,9 +426,9 @@ const CONFIGS={
 };
 
 async function ask(prompt,maxTokens=200){
-  const res=await fetch('https://api.anthropic.com/v1/messages',{
+  const res=await fetch('https://daily-brief.cameronxdx9.workers.dev',{
     method:'POST',
-    headers:{'Content-Type':'application/json','x-api-key':API_KEY,'anthropic-version':'2023-06-01'},
+    headers:{'Content-Type':'application/json'},
     body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:maxTokens,messages:[{role:'user',content:prompt}]})
   });
   if(!res.ok)throw new Error('API '+res.status);
