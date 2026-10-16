@@ -1,0 +1,13 @@
+name = "daily-briefing-scheduler"
+main = "worker.js"
+compatibility_date = "2026-09-01"
+
+[triggers]
+# UTC. Each local time has two entries: one for PDT (summer), one for PST (winter).
+# The Worker ignores whichever one doesn't match Las Vegas time that day.
+crons = [
+  "59 12 * * *",  # 5:59 AM PDT
+  "59 13 * * *",  # 5:59 AM PST
+  "59 23 * * *",  # 4:59 PM PDT
+  "59 0 * * *",   # 4:59 PM PST
+]
