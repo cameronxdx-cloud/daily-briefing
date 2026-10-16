@@ -1,0 +1,69 @@
+name: Vegas News Brief
+
+on:
+  schedule:
+    # 7:00 AM and 5:00 PM Pacific (PDT). During PST these land an hour earlier.
+    - cron: "0 14 * * *"
+    - cron: "0 0 * * *"
+  workflow_dispatch:
+    inputs:
+      send:
+        description: "Send the WhatsApp message"
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: vegas-news
+  cancel-in-progress: false
+
+jobs:
+  build-and-send:
+    name: Fetch news, build page, send WhatsApp
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build page and send WhatsApp brief
+        env:
+          ANTHROPIC_API_KEY:    ${{ secrets.ANTHROPIC_API_KEY }}
+          TWILIO_ACCOUNT_SID:   ${{ secrets.TWILIO_ACCOUNT_SID }}
+          TWILIO_AUTH_TOKEN:    ${{ secrets.TWILIO_AUTH_TOKEN }}
+          TWILIO_WHATSAPP_FROM: ${{ secrets.TWILIO_WHATSAPP_FROM }}
+          YOUR_WHATSAPP_NUMBER: ${{ secrets.YOUR_WHATSAPP_NUMBER }}
+          VEGAS_PAGE_URL:       https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.send }}" != "true" ]; then
+            node src/vegas-news.js --dry-run
+          else
+            node src/vegas-news.js
+          fi
+
+      - name: Upload page
+        if: always()
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  deploy:
+    name: Publish to GitHub Pages
+    needs: build-and-send
+    if: always() && needs.build-and-send.result != 'cancelled'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
