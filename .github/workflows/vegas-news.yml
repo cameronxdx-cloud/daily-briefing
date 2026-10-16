@@ -25,6 +25,8 @@ jobs:
   build-and-send:
     name: Fetch news, build page, send WhatsApp
     runs-on: ubuntu-latest
+    outputs:
+      publish: ${{ steps.assemble.outputs.ready }}
     steps:
       - uses: actions/checkout@v4
 
@@ -42,7 +44,7 @@ jobs:
           TWILIO_AUTH_TOKEN:    ${{ secrets.TWILIO_AUTH_TOKEN }}
           TWILIO_WHATSAPP_FROM: ${{ secrets.TWILIO_WHATSAPP_FROM }}
           YOUR_WHATSAPP_NUMBER: ${{ secrets.YOUR_WHATSAPP_NUMBER }}
-          VEGAS_PAGE_URL:       https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/
+          VEGAS_PAGE_URL:       https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/vegas/
         run: |
           if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.send }}" != "true" ]; then
             node src/vegas-news.js --dry-run
@@ -50,8 +52,32 @@ jobs:
             node src/vegas-news.js
           fi
 
-      - name: Upload page
+      # Only publish when Pages is set to "GitHub Actions". Otherwise skip
+      # quietly so the run stays green and any existing Pages site is untouched.
+      - name: Check GitHub Pages setup
+        id: pages
         if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          build_type=$(gh api "repos/${{ github.repository }}/pages" --jq .build_type 2>/dev/null || echo none)
+          if [ "$build_type" = "workflow" ]; then
+            echo "enabled=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::Skipping page publish: GitHub Pages source is '$build_type'. Set Settings → Pages → Source to 'GitHub Actions' to publish the Vegas page."
+          fi
+
+      # The Daily Brief page stays at the site root; the Vegas page goes under /vegas/.
+      - name: Assemble site
+        id: assemble
+        if: always() && steps.pages.outputs.enabled == 'true' && hashFiles('site/vegas/index.html') != ''
+        run: |
+          cp index.html site/index.html
+          echo "ready=true" >> "$GITHUB_OUTPUT"
+
+      - name: Upload page
+        if: always() && steps.assemble.outputs.ready == 'true'
         uses: actions/upload-pages-artifact@v3
         with:
           path: site
@@ -59,7 +85,7 @@ jobs:
   deploy:
     name: Publish to GitHub Pages
     needs: build-and-send
-    if: always() && needs.build-and-send.result != 'cancelled'
+    if: always() && needs.build-and-send.outputs.publish == 'true'
     runs-on: ubuntu-latest
     environment:
       name: github-pages

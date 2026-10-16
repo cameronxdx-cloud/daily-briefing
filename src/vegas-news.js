@@ -4,7 +4,7 @@
 //   node src/vegas-news.js            build page + send WhatsApp
 //   node src/vegas-news.js --dry-run  build page + print the message, don't send
 //
-// Output: site/index.html and site/news.json
+// Output: site/vegas/index.html and site/vegas/news.json
 
 import fs from "node:fs/promises";
 import twilio from "twilio";
@@ -13,7 +13,7 @@ import { summarizeWithClaude, headlineBrief, buildWhatsAppMessage } from "./vega
 import { renderPage } from "./vegas/render.js";
 
 const DRY_RUN = process.argv.includes("--dry-run");
-const OUT_DIR = process.env.VEGAS_OUT_DIR ?? "site";
+const OUT_DIR = process.env.VEGAS_OUT_DIR ?? "site/vegas";
 
 const dateLabel = new Date().toLocaleDateString("en-US", {
   weekday: "long", month: "long", day: "numeric", timeZone: "America/Los_Angeles",
