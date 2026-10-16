@@ -1,8 +1,8 @@
 name: Daily WhatsApp Briefing
 
 on:
-  schedule:
-    - cron: "0 13 * * *"
+  # Started at 5:59 AM Las Vegas time by the Cloudflare scheduler (scheduler/).
+  # GitHub's own `schedule:` trigger ran hours late, so it isn't used.
   workflow_dispatch:
 
 jobs:

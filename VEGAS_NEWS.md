@@ -15,7 +15,7 @@ A local news app for Las Vegas. It pulls headlines from Las Vegas outlets, CNN a
 
 ## Schedule
 
-`.github/workflows/vegas-news.yml` runs at **7 AM and 5 PM Pacific**. You can also run it by hand: **Actions → Vegas News Brief → Run workflow**. Untick *send* to rebuild the page without texting.
+The Vegas brief arrives at **6 AM and 5 PM Las Vegas time**, and the Daily Brief at **6 AM**. A Cloudflare Worker starts both workflows on time; see `scheduler/README.md`. GitHub's built-in scheduler isn't used because it often ran hours late. You can also run it by hand: **Actions → Vegas News Brief → Run workflow**. Untick *send* to rebuild the page without texting.
 
 ## Setup
 
@@ -56,4 +56,4 @@ Open `site/vegas/index.html` in a browser to see the page.
 - **Add or remove outlets:** edit `SOURCES` in `src/vegas/sources.js`. Any RSS or Atom feed works. For a site without a feed, use `googleNews("site:example.com when:2d")`.
 - **Change which national stories count as Vegas news:** edit `VEGAS_KEYWORDS`.
 - **Change the tone or length of the summary:** edit `SYSTEM` in `src/vegas/summarize.js`. Twilio's WhatsApp limit is 1,600 characters. Longer briefs are cut off at the last bullet that fits.
-- **Change the send times:** edit the `cron` lines in the workflow. They're in UTC.
+- **Change the send times:** edit `SCHEDULE` in `scheduler/worker.js`, then redeploy the Worker.

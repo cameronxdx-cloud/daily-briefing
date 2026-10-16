@@ -1,10 +1,8 @@
 name: Vegas News Brief
 
 on:
-  schedule:
-    # 7:00 AM and 5:00 PM Pacific (PDT). During PST these land an hour earlier.
-    - cron: "0 14 * * *"
-    - cron: "0 0 * * *"
+  # Started at 5:59 AM and 4:59 PM Las Vegas time by the Cloudflare scheduler
+  # (scheduler/). GitHub's own `schedule:` trigger ran hours late.
   workflow_dispatch:
     inputs:
       send:
