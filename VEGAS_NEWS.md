@@ -11,7 +11,7 @@ A local news app for Las Vegas. It pulls headlines from Las Vegas outlets, CNN a
    It drops stories older than 36 hours, merges duplicates (the same story from several outlets), and pulls any national story that mentions Vegas into its own section.
 2. **Summarizes** the headlines with Claude (`src/vegas/summarize.js`) into a short brief: 4–6 Las Vegas bullets and 3–4 national bullets. Without an `ANTHROPIC_API_KEY` it sends a plain headline list instead.
 3. **Builds the page** (`src/vegas/render.js`) at `site/vegas/index.html`: the brief at the top, then *Las Vegas & Nevada*, *Vegas in the national news* and *Nation & World*. It works on phones and follows your light or dark mode.
-4. **Sends the WhatsApp message** with Twilio, with a link to the full page.
+4. **Sends the WhatsApp message** with Twilio, with a link to the full page. It then waits up to 60 seconds for WhatsApp to confirm delivery. If the message fails, the run turns red and the log shows Twilio's error code with a hint on how to fix it.
 
 ## Schedule
 
