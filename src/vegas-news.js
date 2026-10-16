@@ -11,6 +11,7 @@ import twilio from "twilio";
 import { collectNews } from "./vegas/feeds.js";
 import { summarizeWithClaude, headlineBrief, buildWhatsAppMessage } from "./vegas/summarize.js";
 import { renderPage } from "./vegas/render.js";
+import { confirmDelivery } from "./whatsapp-delivery.js";
 
 const DRY_RUN = process.argv.includes("--dry-run");
 const OUT_DIR = process.env.VEGAS_OUT_DIR ?? "site/vegas";
@@ -63,10 +64,14 @@ async function main() {
   // YOUR_WHATSAPP_NUMBER may hold several comma-separated recipients.
   const recipients = (process.env.YOUR_WHATSAPP_NUMBER ?? "").split(",").map((n) => n.trim()).filter(Boolean);
   if (!recipients.length) throw new Error("YOUR_WHATSAPP_NUMBER is not set");
+  const sent = [];
   for (const to of recipients) {
-    const sent = await client.messages.create({ from: process.env.TWILIO_WHATSAPP_FROM, to, body: message });
-    console.log(`✅ Sent to ${to} — SID ${sent.sid}`);
+    const msg = await client.messages.create({ from: process.env.TWILIO_WHATSAPP_FROM, to, body: message });
+    console.log(`📤 Handed to Twilio for ${to} — SID ${msg.sid}`);
+    sent.push(msg.sid);
   }
+
+  await confirmDelivery(client, sent);
 }
 
 main().catch((err) => {

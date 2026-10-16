@@ -1,4 +1,5 @@
 import twilio from "twilio";
+import { confirmDelivery } from "./whatsapp-delivery.js";
 
 const twilioClient = twilio(
   process.env.TWILIO_ACCOUNT_SID,
@@ -71,7 +72,8 @@ _Have a great day. 🤝_`;
     body: message,
   });
 
-  console.log(`✅ Sent! SID: ${sent.sid}`);
+  console.log(`📤 Handed to Twilio — SID: ${sent.sid}`);
+  await confirmDelivery(twilioClient, [sent.sid]);
 }
 
 main().catch((err) => {
