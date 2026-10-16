@@ -10,7 +10,7 @@ A local news app for Las Vegas. It pulls headlines from Las Vegas outlets, CNN a
 
    It drops stories older than 36 hours, merges duplicates (the same story from several outlets), and pulls any national story that mentions Vegas into its own section.
 2. **Summarizes** the headlines with Claude (`src/vegas/summarize.js`) into a short brief: 4–6 Las Vegas bullets and 3–4 national bullets. Without an `ANTHROPIC_API_KEY` it sends a plain headline list instead.
-3. **Builds the page** (`src/vegas/render.js`) at `site/vegas/index.html`: the brief at the top, then *Las Vegas & Nevada*, *Vegas in the national news* and *Nation & World*. It works on phones and follows your light or dark mode.
+3. **Builds the page** (`src/vegas/render.js`) at `site/vegas/index.html`. It opens with today's brief and the top stories, ranked by how many outlets covered them. Las Vegas stories are then grouped by topic: Crime & Safety, Traffic & Travel, Government, Strip & Business, Sports, Weather & Environment and Schools. National news ends the page as a quick headline list. Topic tabs and a search box filter the page. On phones, stories show as compact rows, and there's a light/dark toggle. Topics are assigned by keyword in `src/vegas/topics.js`.
 4. **Sends the WhatsApp message** with Twilio, with a link to the full page. It then waits up to 60 seconds for WhatsApp to confirm delivery. If the message fails, the run turns red and the log shows Twilio's error code with a hint on how to fix it.
 
 ## Schedule
@@ -55,5 +55,6 @@ Open `site/vegas/index.html` in a browser to see the page.
 
 - **Add or remove outlets:** edit `SOURCES` in `src/vegas/sources.js`. Any RSS or Atom feed works. For a site without a feed, use `googleNews("site:example.com when:2d")`.
 - **Change which national stories count as Vegas news:** edit `VEGAS_KEYWORDS`.
+- **Change the topics or how stories are sorted into them:** edit `TOPICS` in `src/vegas/topics.js`.
 - **Change the tone or length of the summary:** edit `SYSTEM` in `src/vegas/summarize.js`. Twilio's WhatsApp limit is 1,600 characters. Longer briefs are cut off at the last bullet that fits.
 - **Change the send times:** edit `SCHEDULE` in `scheduler/worker.js`, then redeploy the Worker.

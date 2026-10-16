@@ -140,9 +140,16 @@ export async function collectNews({ sources = SOURCES, now = new Date() } = {}) 
     .filter((i) => !i.published || new Date(i.published).getTime() >= cutoff)
     .sort((a, b) => (b.published ?? "").localeCompare(a.published ?? ""));
 
+  // Merge duplicates, remembering which other outlets covered the story.
   const unique = [];
   for (const item of all) {
-    if (!unique.some((u) => u.link === item.link || isDuplicate(u, item))) unique.push(item);
+    const dup = unique.find((u) => u.link === item.link || isDuplicate(u, item));
+    if (!dup) unique.push({ ...item, alsoIn: [] });
+    else {
+      if (item.outlet !== dup.outlet && !dup.alsoIn.includes(item.outlet)) dup.alsoIn.push(item.outlet);
+      dup.image ??= item.image;
+      dup.summary ||= item.summary;
+    }
   }
 
   const perOutlet = {};
