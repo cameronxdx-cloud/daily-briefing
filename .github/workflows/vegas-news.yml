@@ -1,0 +1,95 @@
+name: Vegas News Brief
+
+on:
+  schedule:
+    # 7:00 AM and 5:00 PM Pacific (PDT). During PST these land an hour earlier.
+    - cron: "0 14 * * *"
+    - cron: "0 0 * * *"
+  workflow_dispatch:
+    inputs:
+      send:
+        description: "Send the WhatsApp message"
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: vegas-news
+  cancel-in-progress: false
+
+jobs:
+  build-and-send:
+    name: Fetch news, build page, send WhatsApp
+    runs-on: ubuntu-latest
+    outputs:
+      publish: ${{ steps.assemble.outputs.ready }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build page and send WhatsApp brief
+        env:
+          ANTHROPIC_API_KEY:    ${{ secrets.ANTHROPIC_API_KEY }}
+          TWILIO_ACCOUNT_SID:   ${{ secrets.TWILIO_ACCOUNT_SID }}
+          TWILIO_AUTH_TOKEN:    ${{ secrets.TWILIO_AUTH_TOKEN }}
+          TWILIO_WHATSAPP_FROM: ${{ secrets.TWILIO_WHATSAPP_FROM }}
+          YOUR_WHATSAPP_NUMBER: ${{ secrets.YOUR_WHATSAPP_NUMBER }}
+          VEGAS_PAGE_URL:       https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/vegas/
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.send }}" != "true" ]; then
+            node src/vegas-news.js --dry-run
+          else
+            node src/vegas-news.js
+          fi
+
+      # Only publish when Pages is set to "GitHub Actions". Otherwise skip
+      # quietly so the run stays green and any existing Pages site is untouched.
+      - name: Check GitHub Pages setup
+        id: pages
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          build_type=$(gh api "repos/${{ github.repository }}/pages" --jq .build_type 2>/dev/null || echo none)
+          if [ "$build_type" = "workflow" ]; then
+            echo "enabled=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::Skipping page publish: GitHub Pages source is '$build_type'. Set Settings → Pages → Source to 'GitHub Actions' to publish the Vegas page."
+          fi
+
+      # The Daily Brief page stays at the site root; the Vegas page goes under /vegas/.
+      - name: Assemble site
+        id: assemble
+        if: always() && steps.pages.outputs.enabled == 'true' && hashFiles('site/vegas/index.html') != ''
+        run: |
+          cp index.html site/index.html
+          echo "ready=true" >> "$GITHUB_OUTPUT"
+
+      - name: Upload page
+        if: always() && steps.assemble.outputs.ready == 'true'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  deploy:
+    name: Publish to GitHub Pages
+    needs: build-and-send
+    if: always() && needs.build-and-send.outputs.publish == 'true'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
